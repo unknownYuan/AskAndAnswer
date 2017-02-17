@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this is a template practice</title>
+</head>
+<body>
+##这一行是注释
+    $!{value1}　<br>
+    $!{value2} ## !表示如果value2不存在，强制为空
+    ${value3} <br> ## 　直接显示
+##　显示List of string ls
+    $!{list} <br>
+## list的遍历
+    #foreach($color in $list)
+    This is color, and it's count is $!{foreach.count} and it's index is $!{foreach.index}: $color <br>
+    #end
+## map的练习使用
+    #foreach($key in $ms.keySet())
+        $key --> $ms.get($key) <br>
+    #end
+##　自定义对象的使用,当使用name属性时，会尝试查找是否存在getName方法
+    $!{user.name} <br>
+    $!{user.getName()} <br>
+
+##　设置变量
+    #set($var = "variable")
+    $!{var}<br>
+
+##　连接两个变量
+    #set($var2 = "$!{var} + var2")
+    $!{var2} <br>
+
+##引入其他文件,parse　会解析变量，但是include不会模板解析
+    #parse("header.vm") <br>
+    #include("header.vm") <br>
+
+##宏定义
+    #macro(macro_func, $index, $color)
+    this is index: $index, $color <br>
+    #end
+
+    #foreach($color in $list)
+        #macro_func($foreach.index, $color) <br>
+    #end
+
+</body>
+</html>
