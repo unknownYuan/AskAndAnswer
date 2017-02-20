@@ -16,9 +16,9 @@ import java.util.*;
 /**
  * Created by h on 17-2-17.
  */
-@Controller
+//@Controller
 public class indexController {
-    //练习使用路径变量
+    //    练习使用路径变量
     @RequestMapping(path = {"/", "/profile/{userId}"})
     @ResponseBody
     public String index(@PathVariable("userId") String userId,
