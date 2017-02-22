@@ -35,8 +35,10 @@ public class HomeController {
         List<ViewObject> vos = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             ViewObject vo = new ViewObject();
-            vo.set("question", list.get(i));
-            vo.set("user", userService.getUser(i));
+            Question question = list.get(i);
+            vo.set("question", question);
+            //问题和对应的用户应该匹配，不能是随意的id
+            vo.set("user", userService.getUser(question.getUserId()));
             vos.add(vo);
         }
         model.addAttribute("vos", vos);
