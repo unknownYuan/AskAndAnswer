@@ -5,6 +5,11 @@ package com.haodong.model;
  */
 public class User {
     private int id;
+    private String name;
+    private String password;
+    private String salt;
+    private String headUrl;
+
 
     public int getId() {
         return id;
@@ -13,11 +18,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
-    private String name;
-    private String password;
-    private String salt;
-    private String headUrl;
 
     public String getPassword() {
         return password;
@@ -42,7 +42,6 @@ public class User {
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl;
     }
-
 
 
     public String getName() {

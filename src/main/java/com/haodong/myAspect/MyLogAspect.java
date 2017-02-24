@@ -20,7 +20,7 @@ public class MyLogAspect {
     private Logger l = LoggerFactory.getLogger(MyLogAspect.class);
 
     //包名.类名.方法名
-    @Before("execution(* com.haodong.controller.indexController.*(..))")
+    @Before("execution(* com.haodong.controller.PracticeIndexController.*(..))")
     public void beforeMethod() {
         l.info("before...");
     }

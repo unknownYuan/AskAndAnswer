@@ -1,6 +1,7 @@
 package com.haodong.controller;
 
 import com.haodong.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
@@ -26,20 +26,25 @@ public class LoginController {
 
     @RequestMapping(path = {"/login/"})
     public String login(Model model,
-                        @RequestParam("username") String username,
-                        @RequestParam("password") String password,
-                        @RequestParam(value = "rememberme", defaultValue = "false") boolean rememberme,
+                        @RequestParam(value = "username") String username,
+                        @RequestParam(value = "password") String password,
+                        @RequestParam(value = "next", required = false) String next,
+                        @RequestParam(value = "rememberme", defaultValue = "false", required = false) boolean rememberme,
                         HttpServletResponse httpServletResponse) {
         Map<String, String> maps = userService.login(username, password);
         try {
-            if (!maps.containsKey("ticket")) {
-                model.addAttribute("msg", maps.get("msg"));
-                return "login";
-            } else {
+            if (!maps.containsKey("ticket")) {//如果不存在token，说明登陆失败
+                model.addAttribute("msg", maps.get("msg"));//获取失败信息
+                return "login";//返回到登陆页面
+            } else {//如果登陆成功,就显示主页,主页显示的信息也应该是用户最新的10条信息
                 Cookie cookie = new Cookie("ticket", maps.get("ticket"));
                 cookie.setPath("/");
                 httpServletResponse.addCookie(cookie);
-                return "redirect:/";
+                if (StringUtils.isBlank(next)) {
+                    return "redirect:/";
+                } else {
+                    return "redirect:" + next;
+                }
             }
         } catch (Exception e) {
             logger.error("登陆异常" + e.getMessage());
@@ -62,11 +67,11 @@ public class LoginController {
             model.addAttribute("msg", map.get("msg"));
             return "login";//login表示login.html
         }
-
     }
 
     @RequestMapping(path = "/reglogin", method = RequestMethod.GET)
-    public String reglogin() {
+    public String reglogin(@RequestParam(value = "next", required = false) String next, Model model) {
+        model.addAttribute("next", next);
         return "login";
     }
 

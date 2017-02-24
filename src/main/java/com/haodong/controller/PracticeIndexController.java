@@ -17,7 +17,7 @@ import java.util.*;
  * Created by h on 17-2-17.
  */
 //@Controller
-public class indexController {
+public class PracticeIndexController {
     //    练习使用路径变量
     @RequestMapping(path = {"/", "/profile/{userId}"})
     @ResponseBody

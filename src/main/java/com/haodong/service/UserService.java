@@ -68,12 +68,11 @@ public class UserService {
         }
         String ticket = addLoginTicket(user.getId());
         map.put("ticket", ticket);
-        return map;//如果登陆正常，map中什么也没有
+        return map;//如果登陆正常，map中存在一个token
     }
 
     public String addLoginTicket(int userId) {
         LoginTicket loginTicket = new LoginTicket();
-        //set userId
         loginTicket.setUserId(userId);
         Date date = new Date();
         //set Date

@@ -20,8 +20,8 @@ public class WendaWebConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //注册拦截器
-        registry.addInterceptor(passportInterceptor);
-        //拦截器的顺序问题，第一个拦截器对第二个有影响
+        //registry.addInterceptor(passportInterceptor);
+        //拦截器的顺序问题，第一个拦截器对第二个有影响,从这里开始继续写
         //registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("");
         super.addInterceptors(registry);
     }

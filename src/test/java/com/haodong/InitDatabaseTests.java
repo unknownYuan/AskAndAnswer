@@ -34,7 +34,7 @@ public class InitDatabaseTests {
         for (int i = 0; i < 11; i++) {
             User user = new User();
             user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000)));
-            user.setName(String.format("USER%d", i));
+            user.setName(String.format("USER%d", 1000 + i));//注意：用户不能有重复
             user.setPassword("password2");
             user.setSalt("salt");
             userDAO.addUser(user);
@@ -43,18 +43,18 @@ public class InitDatabaseTests {
         //为question表插入数据
         for (int i = 0; i < 11; i++) {
             Question question = new Question();
-            question.setId(i + 100);
             question.setContent("this is content!");
             question.setCommentCount(i + new Random().nextInt(100));
             question.setCreatedDate(new Date(System.currentTimeMillis() + i * 3600));
-            question.setUserId(i + 1000);
+            question.setUserId(i);
             question.setTitle("title number " + i);
             questionDAO.addQuestion(question);
         }
-        List<Question> ls = questionDAO.selectLatestQuestions(1000, 0, 10);
+        List<Question> ls = questionDAO.selectLatestQuestions(0, 0, 10);
+        //userId 为0的时候会选出10条语句，如果是其他数字，只能选出一条语句
         System.out.println("------------------");
         for (int i = 0; i < ls.size(); i++) {
-            System.out.println(ls.get(i));
+            System.out.println(ls.get(i).getUserId());
         }
         System.out.println("------------------");
     }
