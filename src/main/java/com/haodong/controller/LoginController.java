@@ -23,7 +23,6 @@ public class LoginController {
     UserService userService;
 
     //登陆模块
-
     @RequestMapping(path = {"/login/"})
     public String login(Model model,
                         @RequestParam(value = "username") String username,
@@ -43,7 +42,8 @@ public class LoginController {
                 if (StringUtils.isBlank(next)) {
                     return "redirect:/";
                 } else {
-                    return "redirect:" + next;
+                    String res = "redirect:" + next;
+                    return res;
                 }
             }
         } catch (Exception e) {

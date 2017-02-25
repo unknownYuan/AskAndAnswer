@@ -25,8 +25,9 @@ public class QuestionController {
 
     private static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(QuestionController.class);
 
-    @RequestMapping(value = "/question/add", method = {RequestMethod.POST})
-    @ResponseBody
+
+    @RequestMapping(path = "/question/add", method = {RequestMethod.POST})
+    @ResponseBody //字符串是我们生成的，不需要返回一个html页面
     public String addQuestion(@RequestParam(value = "title") String title,
                               @RequestParam(value = "content") String content) {
         Question question = new Question();
@@ -35,17 +36,17 @@ public class QuestionController {
         question.setTitle(title);
         //自己添加字段
         question.setCreatedDate(new Date());
-        question.setCommentCount(0);
         if (hostHolder.getUser() == null) {
             question.setUserId(WendaUtil.ANONYMOUS_USERID);
         } else {
             question.setUserId(hostHolder.getUser().getId());
         }
+        question.setCommentCount(0);
+        //如果添加问题成功
         if (questionService.addQuestion(question) > 0) {
-            return WendaUtil.getJSONString(0);
-        } else {
-
+            return WendaUtil.getJSONString(0, "成功");
         }
+        //如果添加问题失败
         return WendaUtil.getJSONString(1, "失败");
     }
 }

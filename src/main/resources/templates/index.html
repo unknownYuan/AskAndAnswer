@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>这是问答网站的首页</h1>
+
+
+<h1>quora首页</h1>
+<hr/>
+<form action="/question/add" method="post">
+    title:<br>
+    <input type="text" name="title" value="">
+    <br>
+    content:<br>
+    <input type="text" name="content" value="">
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
 #foreach($vo in $vos)
 <hr/>
 作者：$!{vo.user.name} <br>
@@ -13,8 +18,8 @@
 <br>
 <strong>question $foreach.count : $!{vo.question.title}</strong><br>
 $!{vo.question.content}<br>
-
-$!{vo.question.id}<br>
+<!--在新窗口中打开链接-->
+<a target="_blank" href="/question/$!{vo.question.id}">$!{vo.question.id}</a><br>
 $!{vo.question.createdDate}<br>
 $!{vo.question.userId}<br>
 $!{vo.question.commentCount}<br>

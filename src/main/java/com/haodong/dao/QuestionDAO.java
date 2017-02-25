@@ -5,19 +5,18 @@ import com.haodong.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by h on 17-2-19.
- */
 @Repository
 @Mapper
 public interface QuestionDAO {
     String TABLE_NAME = " question ";
     String TABLE_FIELDS = " title, content, created_date, user_id, comment_count ";
+    String STAR = TABLE_FIELDS + ",id ";
 
     /**
      * @param question
@@ -31,4 +30,7 @@ public interface QuestionDAO {
     List<Question> selectLatestQuestions(@Param("userId") int userId,
                                          @Param("offset") int offset,
                                          @Param("limit") int limit);
+
+    @Select({"select ", STAR, " from ", TABLE_NAME, " where id = #{id}"})
+    Question queryQuestionById(int id);
 }

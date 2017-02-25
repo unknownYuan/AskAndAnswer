@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,7 +30,6 @@ public class HomeController {
     UserService userService;
 
     @RequestMapping(path = {"/", "/index", "/home"}, method = RequestMethod.GET)
-
     public String index(Model model) {
         List<Question> list = questionService.getLatestQuestions(0, 0, 10);
         List<ViewObject> vos = new ArrayList<>();
@@ -43,5 +43,13 @@ public class HomeController {
         }
         model.addAttribute("vos", vos);
         return "index";
+    }
+
+    @RequestMapping(path = "/question/{questionId}")
+    public String getQuestion(Model model,
+                              @PathVariable("questionId") int questionId) {
+        Question question = questionService.queryQuestionById(questionId);
+        model.addAttribute("question", question);
+        return "question";
     }
 }

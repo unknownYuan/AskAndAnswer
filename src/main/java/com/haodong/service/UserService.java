@@ -42,10 +42,11 @@ public class UserService {
         user.setPassword(WendaUtil.MD5(password.concat(user.getSalt())));
         userDAO.addUser(user);
 
-        //注册完成之后登陆
-        String ticket = addLoginTicket(user.getId());
+        //注册完成之后登陆 bug:user.id = 0,newUser.id = auto_increment value
+        User newUser = userDAO.queryByName(user.getName());
+        String ticket = addLoginTicket(newUser.getId());
         map.put("ticket", ticket);
-        return map;//如果注册正常，map中什么也没有
+        return map;//如果注册正常，map中存在ticket
     }
 
     public Map<String, String> login(String userName, String password) {
@@ -66,7 +67,8 @@ public class UserService {
             map.put("msg", "密码错误");
             return map;
         }
-        String ticket = addLoginTicket(user.getId());
+        User newUser  = userDAO.queryByName(userName);
+        String ticket = addLoginTicket(newUser.getId());
         map.put("ticket", ticket);
         return map;//如果登陆正常，map中存在一个token
     }
