@@ -1,16 +1,19 @@
 package com.haodong.controller;
 
+import com.haodong.model.Comment;
 import com.haodong.model.HostHolder;
 import com.haodong.model.Question;
+import com.haodong.service.CommentService;
 import com.haodong.service.QuestionService;
+import com.haodong.util.EntityType;
 import com.haodong.util.WendaUtil;
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by torch on 17-2-22.
@@ -26,8 +29,34 @@ public class QuestionController {
     private static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(QuestionController.class);
 
 
+    /**
+     *
+     * @param model
+     * @param questionId
+     * @return
+     */
+    /**
+     * this is question detail
+     *
+     * @param model
+     * @param questionId
+     * @return
+     */
+    @Autowired
+    CommentService commentService;
+
+    @RequestMapping(path = "/question/{questionId}")
+    public String getQuestion(Model model,
+                              @PathVariable("questionId") int questionId) {
+        Question question = questionService.queryQuestionById(questionId);
+        model.addAttribute("question", question);
+        List<Comment> comments = commentService.getCommentByEntity(questionId, EntityType.QUESTION_TYPE);
+        model.addAttribute("comments", comments);
+        return "question";
+    }
+
     @RequestMapping(path = "/question/add", method = {RequestMethod.POST})
-    @ResponseBody //字符串是我们生成的，不需要返回一个html页面
+    //@ResponseBody //字符串是我们生成的，不需要返回一个html页面
     public String addQuestion(@RequestParam(value = "title") String title,
                               @RequestParam(value = "content") String content) {
         Question question = new Question();
@@ -37,16 +66,22 @@ public class QuestionController {
         //自己添加字段
         question.setCreatedDate(new Date());
         if (hostHolder.getUser() == null) {
-            question.setUserId(WendaUtil.ANONYMOUS_USERID);
+            //不允许匿名用户添加问题,跳到登陆注册页面
+            return "redirect:/";
         } else {
             question.setUserId(hostHolder.getUser().getId());
         }
         question.setCommentCount(0);
         //如果添加问题成功
         if (questionService.addQuestion(question) > 0) {
-            return WendaUtil.getJSONString(0, "成功");
+
+            String res = WendaUtil.getJSONString(0, "添加问题成功");
+            System.out.println(res);
+            return "redirect:/";
         }
         //如果添加问题失败
-        return WendaUtil.getJSONString(1, "失败");
+        String res = WendaUtil.getJSONString(1, "添加问题失败");
+        System.out.println(res);
+        return "redirect:/";
     }
 }

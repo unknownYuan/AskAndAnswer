@@ -13,7 +13,6 @@ public interface UserDAO {
     String TABLE_NAME = " user ";
     String INSERT_FIELDS = " name, password, salt, head_url ";
     String STAR = " id, " + INSERT_FIELDS;
-
     /**
      * 使用注解的方式插入数据
      *
@@ -30,7 +29,7 @@ public interface UserDAO {
      * @param id
      * @return
      */
-    @Select({"select ", INSERT_FIELDS, " from ", TABLE_NAME, " where id = #{id}"})
+    @Select({"select ", STAR, " from ", TABLE_NAME, " where id = #{id}"})
     User queryById(int id);
 
     @Select({"select ", STAR, " from ", TABLE_NAME, " where name = #{name}"})

@@ -2,10 +2,7 @@ package com.haodong.dao;
 
 import com.haodong.model.Question;
 import com.haodong.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +30,8 @@ public interface QuestionDAO {
 
     @Select({"select ", STAR, " from ", TABLE_NAME, " where id = #{id}"})
     Question queryQuestionById(int id);
+
+    @Update({"update ", TABLE_NAME, " set comment_count = #{count} where id = #{id}"})
+    void updateCommentCount(@Param("id") int id,
+                            @Param("count") int count);
 }

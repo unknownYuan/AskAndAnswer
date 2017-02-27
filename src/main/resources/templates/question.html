@@ -10,6 +10,24 @@
     $!{question.userId}<br>
     $!{question.content}<br>
     $!{question.createdDate}<br>
-    $!{question.commentCount}<br>
+
+    评论数：$!{question.commentCount} <br>
+    <h2>评论区</h2>
+    #foreach($comment in $comments)
+
+    用户id: <strong>$!{comment.userId}</strong>
+    评论的内容：<strong>$!{comment.content}</strong><br>
+    #end
+    <hr/>
+
+    <form action="/addComment" method="post">
+        提交评论：
+        <input type="text" name="content" value="">
+        <input type="hidden" name="questionId" value="$!{question.id}">
+        <input type="submit" name="submit" value="submit">
+    </form>
+    <form action="/" method="get">
+        <input type="submit" value="返回首页">
+    </form>
 </body>
 </html>

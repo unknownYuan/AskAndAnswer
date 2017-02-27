@@ -4,6 +4,7 @@ import com.haodong.dao.CommentDAO;
 import com.haodong.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public class CommentService {
     @Autowired
     CommentDAO commentDAO;
 
+    @Autowired
+    SensitiveService sensitiveService;
     public List<Comment> getCommentByEntity(int entityId, int entityType) {
         return commentDAO.selectCommentByEntity(entityId, entityType);
     }
@@ -22,6 +25,10 @@ public class CommentService {
      * @return
      */
     public int addComment(Comment comment) {
+        //评论的敏感词过滤
+        //过滤html标签
+        comment.setContent(HtmlUtils.htmlEscape(comment.getContent()));
+        comment.setContent(sensitiveService.filter(comment.getContent()));
         return commentDAO.addComment(comment) > 0 ? comment.getId() : 0;
     }
 

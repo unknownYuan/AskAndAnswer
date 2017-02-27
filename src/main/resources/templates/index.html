@@ -9,20 +9,26 @@
     content:<br>
     <input type="text" name="content" value="">
     <br><br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="添加问题">
 </form>
 #foreach($vo in $vos)
 <hr/>
-作者：$!{vo.user.name} <br>
 <img src="$!{vo.user.headUrl}" title="用户头像">
 <br>
-<strong>question $foreach.count : $!{vo.question.title}</strong><br>
-$!{vo.question.content}<br>
+这个问题的作者是： $!{vo.user.name} <br>
+你要私信他吗？
+    <form action="/Msg/addMessage" method="post">
+        <input type="text" name="content">
+        <input type="hidden" name="toName" value="$!{vo.user.name}">
+        <input type="submit" value="私信Ta">
+    </form>
+
+<strong>问题的标题：  $!{vo.question.title}</strong><br>
+问题的内容：$!{vo.question.content}<br>
 <!--在新窗口中打开链接-->
-<a target="_blank" href="/question/$!{vo.question.id}">$!{vo.question.id}</a><br>
-$!{vo.question.createdDate}<br>
-$!{vo.question.userId}<br>
-$!{vo.question.commentCount}<br>
+<a target="_blank" href="/question/$!{vo.question.id}">这个问题的id是 $!{vo.question.id}，点击这个id可以查看这个问题的所有信息</a><br>
+日期：$!{vo.question.createdDate}<br>
+评论数：$!{vo.question.commentCount}<br>
 #end
 
 </body>

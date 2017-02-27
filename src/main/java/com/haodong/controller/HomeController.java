@@ -44,12 +44,4 @@ public class HomeController {
         model.addAttribute("vos", vos);
         return "index";
     }
-
-    @RequestMapping(path = "/question/{questionId}")
-    public String getQuestion(Model model,
-                              @PathVariable("questionId") int questionId) {
-        Question question = questionService.queryQuestionById(questionId);
-        model.addAttribute("question", question);
-        return "question";
-    }
 }

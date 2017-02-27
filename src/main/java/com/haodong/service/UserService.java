@@ -90,8 +90,10 @@ public class UserService {
     public User getUser(int id) {
         return userDAO.queryById(id);
     }
-
     public void logout(String ticket) {
         loginTicketDAO.updateStatus(ticket, 1);
+    }
+    public User getUserByName(String name) {
+        return userDAO.queryByName(name);
     }
 }

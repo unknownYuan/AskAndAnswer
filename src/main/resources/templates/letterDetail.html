@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>letterDetail</title>
+</head>
+<body>
+#foreach($vo in $vos)
+    私信的内容是：$!{vo.message.content}<br>
+    我的id是：$!{vo.user.id}<br>
+<hr/>
+#end
+</body>
+</html>
