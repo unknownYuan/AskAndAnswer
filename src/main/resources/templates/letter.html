@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>letter</title>
+</head>
+<body>
+#foreach ($item in $vos)
+    $!{item.conversation.content}<br>
+    $!{item.target.name}<br>
+    $!{item.unread}<br>
+<hr/>
+#end
+</body>
+</html>

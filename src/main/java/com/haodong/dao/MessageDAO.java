@@ -22,6 +22,7 @@ public interface MessageDAO {
 
     /**
      * 插入一条信息
+     *
      * @param message
      * @return
      */
@@ -30,6 +31,7 @@ public interface MessageDAO {
 
     /**
      * 选出消息列表
+     *
      * @param conversationId
      * @param offset
      * @param limit
@@ -39,9 +41,16 @@ public interface MessageDAO {
     List<Message> getConversationDatail(@Param("conversationId") String conversationId,
                                         @Param("offset") int offset,
                                         @Param("limit") int limit);
-    @Select({"select ", INSERT_FIELDS, ", count(id) as id from ( select * from ", TABLE_NAME,
-    "where from_id = #{userId} or to_id = #{userId} order by created_date desc) tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
+
+    //    @Select({"select ", INSERT_FIELDS, ", count(id) as id from ( select * from ", TABLE_NAME,
+//    " where from_id = #{userId} or to_id = #{userId} order by created_date desc) tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
+//    @Select({"select ", INSERT_FIELDS, " , count(id) as id from ( select * from ", TABLE_NAME,
+//            " where from_id=#{userId} or to_id=#{userId} order by created_date desc) tt  order by created_date desc limit #{offset}, #{limit}"})
+    @Select({"select * from ", TABLE_NAME, " where from_id = #{userId} or to_id = #{userId} limit #{offset}, #{limit}"})
     List<Message> getConversationList(@Param("userId") int userId,
                                       @Param("offset") int offset,
                                       @Param("limit") int limit);
+    @Select({"select count(id) from ", TABLE_NAME, " where has_read = 0 and to_id = #{userId} and conversation_id = #{conversationId}"})
+    int getConversationUnreadCount(@Param("conversationId") String conversationId,
+                             @Param("userId") int userId);
 }

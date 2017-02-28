@@ -22,12 +22,16 @@ public class MessageService {
         return messageDAO.addMessage(message) > 0 ? message.getId() : 0;
     }
 
-    public List<Message> getConversationDetail(String conversationId){
+    public List<Message> getConversationDetail(String conversationId) {
         return messageDAO.getConversationDatail(conversationId, 0, 10);
     }
 
 
     public List<Message> getConversationList(int userId) {
         return messageDAO.getConversationList(userId, 0, 2);
+    }
+
+    public int getConversationUnreadCount(String conversationId, int userId) {
+        return messageDAO.getConversationUnreadCount(conversationId, userId);
     }
 }
