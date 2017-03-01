@@ -51,4 +51,8 @@ public class CommentService {
         // status = 1 表示评论无效
         return commentDAO.updateStatus(id, 1);
     }
+
+    public Comment getCommentById(int id){
+        return commentDAO.getCommentById(id);
+    }
 }

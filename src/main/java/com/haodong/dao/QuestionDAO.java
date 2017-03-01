@@ -29,7 +29,7 @@ public interface QuestionDAO {
                                          @Param("limit") int limit);
 
     @Select({"select ", STAR, " from ", TABLE_NAME, " where id = #{id}"})
-    Question queryQuestionById(int id);
+    Question queryQuestionById(@Param("id") int id);
 
     @Update({"update ", TABLE_NAME, " set comment_count = #{count} where id = #{id}"})
     void updateCommentCount(@Param("id") int id,

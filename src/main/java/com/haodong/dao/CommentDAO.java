@@ -49,4 +49,12 @@ public interface CommentDAO {
      */
     @Update({"update ", TABLE_NAME, " set status = #{status} where id = #{id}"})
     int updateStatus(@Param("id") int id,@Param("status") int status);
+
+    /**
+     * 通过id查询comment
+     * @param id
+     * @return
+     */
+    @Select({"select * from ", TABLE_NAME, " where id = #{id}"})
+    Comment getCommentById(@Param("id") int id);
 }

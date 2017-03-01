@@ -5,19 +5,23 @@
     <title>question</title>
 </head>
 <body>
-    $!{question.id}<br>
-    $!{question.title}<br>
-    $!{question.userId}<br>
-    $!{question.content}<br>
-    $!{question.createdDate}<br>
 
-    评论数：$!{question.commentCount} <br>
+    这个问题的标题是：$!{question.title}<br>
+    <!--$!{question.userId}<br>-->
+    这个问题的内容是：$!{question.content}<br>
+    该问题被创建于：$!{question.createdDate}<br>
+    被评论：$!{question.commentCount} 次<br>
     <h2>评论区</h2>
-    #foreach($comment in $comments)
 
-    用户id: <strong>$!{comment.userId}</strong>
-    评论的内容：<strong>$!{comment.content}</strong><br>
+    #foreach($vo in $vos)
+        评论的内容：<strong>$!{vo.comment.content}</strong><br>
+        这条评论的作者是：$!{vo.user.name} <br>
+        这条评论被喜欢了 $!{vo.likeCount} 次<br>
+        <a  href="/like?commentId=$!{vo.comment.Id}">like</a><br>
+        <a  href="/dislike?commentId=$!{vo.comment.Id}">dislike</a><br>
+    <br>
     #end
+
     <hr/>
 
     <form action="/addComment" method="post">

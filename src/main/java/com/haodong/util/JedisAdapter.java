@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+
 @Service
 public class JedisAdapter implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
@@ -16,15 +18,16 @@ public class JedisAdapter implements InitializingBean {
     public long sadd(String likeKey, String userId) {
         Jedis jedis = null;
         try {
-            jedisPool.getResource();//获取资源
+            jedis = jedisPool.getResource();//获取资源
             return jedis.sadd(likeKey, userId);
         } catch (Exception e) {
-            logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         } finally {
             if (jedis != null) {
                 jedis.close();//释放资源
             }
         }
+        return 0;
     }
 
     @Override
@@ -43,11 +46,14 @@ public class JedisAdapter implements InitializingBean {
         try {
             jedis = jedisPool.getResource();
             return jedis.scard(key);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (jedis != null) {
                 jedis.close();
             }
         }
+        return 0;
     }
 
 
@@ -56,11 +62,14 @@ public class JedisAdapter implements InitializingBean {
         try {
             jedis = jedisPool.getResource();
             return jedis.sismember(key, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (jedis != null) {
                 jedis.close();
             }
         }
+        return false;
     }
 
     public void srem(String disLike, String userId) {
@@ -69,11 +78,39 @@ public class JedisAdapter implements InitializingBean {
             jedis = jedisPool.getResource();
             jedis.srem(disLike, userId);
         } catch (Exception e) {
-            logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         } finally {
             if (jedis != null) {
                 jedis.close();
             }
         }
+    }
+
+    public void lpush(String key, String json) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.lpush(key, json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        } finally {
+            jedis.close();
+        }
+    }
+
+    public List<String> brpop(int timeOut, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.brpop(timeOut, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
     }
 }

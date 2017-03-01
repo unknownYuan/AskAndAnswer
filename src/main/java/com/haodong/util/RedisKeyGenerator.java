@@ -7,6 +7,7 @@ public class RedisKeyGenerator {
     private static String SPILT = ":";
     private static String BIZ_LIKE = "LIKE";
     private static String BIZ_DISLIKE = "DISLIKE";
+    private static String BIZ_EVENTQUEUE = "EVENT_QUEUE";
 
     public static String getBizLike(int entityType, int entityId) {
         return BIZ_LIKE + SPILT + entityType + SPILT + entityId;
@@ -14,5 +15,9 @@ public class RedisKeyGenerator {
 
     public static String getBizDislike(int entityType, int entityId) {
         return BIZ_DISLIKE + SPILT + entityType + SPILT + entityId;
+    }
+
+    public static String getBizEventqueue(){
+        return BIZ_EVENTQUEUE;
     }
 }

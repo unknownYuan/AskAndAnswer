@@ -3,8 +3,11 @@ package com.haodong.controller;
 import com.haodong.model.Comment;
 import com.haodong.model.HostHolder;
 import com.haodong.model.Question;
+import com.haodong.model.ViewObject;
 import com.haodong.service.CommentService;
+import com.haodong.service.LikeService;
 import com.haodong.service.QuestionService;
+import com.haodong.service.UserService;
 import com.haodong.util.EntityType;
 import com.haodong.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,14 +48,34 @@ public class QuestionController {
      */
     @Autowired
     CommentService commentService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    LikeService likeService;
 
     @RequestMapping(path = "/question/{questionId}")
     public String getQuestion(Model model,
                               @PathVariable("questionId") int questionId) {
         Question question = questionService.queryQuestionById(questionId);
+        //添加问题到model
         model.addAttribute("question", question);
+        logger.info("title", question.getTitle());
+        //添加这个问题的评论到model
         List<Comment> comments = commentService.getCommentByEntity(questionId, EntityType.QUESTION_TYPE);
-        model.addAttribute("comments", comments);
+        List<ViewObject> vos = new ArrayList<>();
+        for (Comment comment:
+             comments) {
+            ViewObject vo = new ViewObject();
+            //这条评论：$!{vos.vo.comment}
+            vo.set("comment", comment);
+            //这条评论的赞数$!{vos.vo.likeCount}
+            long cnt = likeService.getLikeCount(EntityType.COMMENT_TYPE, comment.getId());
+            vo.set("likeCount", cnt);
+            //这条评论的作者 $!{vos.vo.user}
+            vo.set("user", userService.getUser(comment.getUserId()));
+            vos.add(vo);
+        }
+        model.addAttribute("vos", vos);
         return "question";
     }
 
