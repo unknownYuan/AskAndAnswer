@@ -61,7 +61,7 @@ public class QuestionController {
         model.addAttribute("question", question);
         logger.info("title", question.getTitle());
         //添加这个问题的评论到model
-        List<Comment> comments = commentService.getCommentByEntity(questionId, EntityType.QUESTION_TYPE);
+        List<Comment> comments = commentService.getCommentByEntity(questionId, EntityType.QUESTION);
         List<ViewObject> vos = new ArrayList<>();
         for (Comment comment:
              comments) {
@@ -69,7 +69,7 @@ public class QuestionController {
             //这条评论：$!{vos.vo.comment}
             vo.set("comment", comment);
             //这条评论的赞数$!{vos.vo.likeCount}
-            long cnt = likeService.getLikeCount(EntityType.COMMENT_TYPE, comment.getId());
+            long cnt = likeService.getLikeCount(EntityType.COMMENT, comment.getId());
             vo.set("likeCount", cnt);
             //这条评论的作者 $!{vos.vo.user}
             vo.set("user", userService.getUser(comment.getUserId()));

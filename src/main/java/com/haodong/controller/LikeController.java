@@ -45,11 +45,11 @@ public class LikeController {
                 new EventModel(EventType.LIKE)
                         .setActorId(hostHolder.getUser().getId())
                         .setEntityId(commentId)
-                        .setEntityType(EntityType.COMMENT_TYPE)
+                        .setEntityType(EntityType.COMMENT)
                         .setEntityOwnerId(commentService.getCommentById(commentId).getUserId())
                         .setExt("questionId", String.valueOf(commentService.getCommentById(commentId).getEntityId())));
 
-        likeService.like(hostHolder.getUser().getId(), EntityType.COMMENT_TYPE, commentId);
+        likeService.like(hostHolder.getUser().getId(), EntityType.COMMENT, commentId);
         return "redirect:/question/" + String.valueOf(commentService.getCommentById(commentId).getEntityId());
     }
 
@@ -67,11 +67,11 @@ public class LikeController {
                 new EventModel(EventType.LIKE)
                         .setActorId(hostHolder.getUser().getId())
                         .setEntityId(commentId)
-                        .setEntityType(EntityType.COMMENT_TYPE)
+                        .setEntityType(EntityType.COMMENT)
                         .setEntityOwnerId(commentService.getCommentById(commentId).getUserId())
                         .setExt("questionId", String.valueOf(commentService.getCommentById(commentId).getEntityId())));
 
-        likeService.disLike(hostHolder.getUser().getId(), EntityType.COMMENT_TYPE, commentId);
+        likeService.disLike(hostHolder.getUser().getId(), EntityType.COMMENT, commentId);
         return "redirect:/question/" + String.valueOf(commentService.getCommentById(commentId).getEntityId());
     }
 }

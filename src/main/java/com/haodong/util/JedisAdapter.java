@@ -1,19 +1,73 @@
 package com.haodong.util;
 
+import org.apache.velocity.util.ArrayListWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Transaction;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class JedisAdapter implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
     //jedis连接池
     private JedisPool jedisPool = null;
+
+    //获得jedis
+    public Jedis getJedis() {
+        return jedisPool.getResource();
+    }
+
+    public long zadd(String key, double score, String value) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.zadd(key, score, value);
+        } catch (Exception e) {
+
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return 0;
+    }
+
+    public Transaction multi(Jedis jedis) {
+        try {
+            return jedis.multi();
+        } catch (Exception e) {
+
+        } finally {
+
+        }
+        return null;
+    }
+
+    public List<Object> exec(Transaction tx, Jedis jedis) {
+        try {
+            return tx.exec();
+        } catch (Exception e) {
+
+        } finally {
+            if (tx != null) {
+                try {
+                    tx.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return new ArrayList<>();//默认返回值是0
+    }
 
     public long sadd(String likeKey, String userId) {
         Jedis jedis = null;
@@ -28,6 +82,22 @@ public class JedisAdapter implements InitializingBean {
             }
         }
         return 0;
+    }
+
+    public Set<String> zrange(String key, int start, int end) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+
+            return jedis.zrange(key, start, end);
+        } catch (Exception e) {
+
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
     }
 
     @Override
@@ -93,9 +163,10 @@ public class JedisAdapter implements InitializingBean {
             jedis.lpush(key, json);
         } catch (Exception e) {
             e.printStackTrace();
-            return;
         } finally {
-            jedis.close();
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 
@@ -103,7 +174,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            return jedis.brpop(timeOut, key);
+            return jedis.brpop(timeOut, key);//b--blocking r--remove pop--返回最后一个元素的值
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -112,5 +183,56 @@ public class JedisAdapter implements InitializingBean {
             }
         }
         return null;
+    }
+
+    public long zcard(String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.zcard(key);
+        } catch (Exception e) {
+
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 成员的分数值，以字符串的形式表示
+     * @param key
+     * @param member
+     * @return
+     */
+    public Double zscore(String key, String member) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.zscore(key, member);
+        } catch (Exception e) {
+
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    public Set<String> zrevrange(String key, int start, int end) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.zrevrange(key, start, end);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return new HashSet<String>();
     }
 }

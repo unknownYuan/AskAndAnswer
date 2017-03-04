@@ -51,9 +51,9 @@ public class CommentController {
             comment.setUserId(WendaUtil.ANONYMOUS_USERID);
         }
         comment.setEntityId(questionId);
-        comment.setEntityType(EntityType.QUESTION_TYPE);
+        comment.setEntityType(EntityType.QUESTION);
         commentService.addComment(comment);
-        int count = commentService.getComment(questionId, EntityType.QUESTION_TYPE);
+        int count = commentService.getComment(questionId, EntityType.QUESTION);
         System.out.println("---------------------");
         System.out.println(count);
         System.out.println("---------------------");

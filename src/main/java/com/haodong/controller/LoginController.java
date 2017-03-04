@@ -1,5 +1,8 @@
 package com.haodong.controller;
 
+import com.haodong.async.EventModel;
+import com.haodong.async.EventProducer;
+import com.haodong.async.EventType;
 import com.haodong.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -8,19 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-/**
- * Created by h on 17-2-21.
- */
+
 @Controller
 public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     //登陆模块
     @RequestMapping(path = {"/login/"})
@@ -39,6 +42,11 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", maps.get("ticket"));
                 cookie.setPath("/");
                 httpServletResponse.addCookie(cookie);
+                //判断收件人登陆的时候是否ip异常,这是邮件的收件人邮箱！
+                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+                        .setExt("email", "1715976003@qq.com")
+                        .setExt("username", username)
+                        .setActorId(userService.getUserByName(username).getId()));
                 if (StringUtils.isBlank(next)) {
                     return "redirect:/";
                 } else {

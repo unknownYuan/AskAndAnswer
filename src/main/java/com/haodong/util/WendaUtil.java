@@ -17,8 +17,10 @@ import java.util.Map;
 public class WendaUtil {
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
-    public static int ANONYMOUS_USERID = 3;
-    public static int SYSTEM_USERID = 4;
+    //匿名用户用0表示
+    public static int ANONYMOUS_USERID = 0;
+    //系统用户用整数的最大值表示
+    public static int SYSTEM_USERID = Integer.MAX_VALUE;
 
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();
