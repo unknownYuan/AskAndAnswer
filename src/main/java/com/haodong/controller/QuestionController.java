@@ -32,13 +32,6 @@ public class QuestionController {
 
     private static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(QuestionController.class);
 
-
-    /**
-     *
-     * @param model
-     * @param questionId
-     * @return
-     */
     /**
      * this is question detail
      *

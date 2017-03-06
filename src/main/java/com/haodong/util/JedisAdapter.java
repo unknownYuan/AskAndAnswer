@@ -225,7 +225,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            jedis.zrevrange(key, start, end);
+            return jedis.zrevrange(key, start, end);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

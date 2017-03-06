@@ -19,5 +19,6 @@
     <!-- Continue going here -->
     <mappers>
         <mapper resource="com.haodong.dao/QuestionDAO.xml"/>
+        <mapper resource="com.haodong.dao/FeedDAO.xml"/>
     </mappers>
 </configuration>

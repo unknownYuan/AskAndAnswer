@@ -1,5 +1,6 @@
 package com.haodong.service;
 
+import com.haodong.model.User;
 import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class FollowService {
     @Autowired
     JedisAdapter jedisAdapter;
 
+    @Autowired
+    UserService userService;
     /**
      * 关注
      *
@@ -86,6 +89,19 @@ public class FollowService {
     public List<Integer> getFollowers(int entityType, int entityId, int offset, int count) {
         String followerKey = RedisKeyGenerator.getFollowerKey(entityType, entityId);
         return getIdsFromSet(jedisAdapter.zrevrange(followerKey, offset, offset + count));
+    }
+    public List<User> getFollowerUsers(int entityType, int entityId, int offset, int count) {
+        String followerKey = RedisKeyGenerator.getFollowerKey(entityType, entityId);
+        List<Integer> ids = getIdsFromSet(jedisAdapter.zrevrange(followerKey, offset, offset + count));
+        List<User> users = new ArrayList<>();
+        for (Integer id:
+             ids) {
+            User user = userService.getUser(id);
+            if(user != null){
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     //返回粉丝数目

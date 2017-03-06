@@ -16,9 +16,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by torch on 17-3-4.
- */
+
 @Component
 public class FollowHandler implements EventHandler{
 

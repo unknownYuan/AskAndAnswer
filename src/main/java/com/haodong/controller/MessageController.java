@@ -26,6 +26,15 @@ public class MessageController {
     @Autowired
     UserService userService;
 
+    @RequestMapping(path = {"/msg/notification"}, method = RequestMethod.GET)
+    public String notificate(Model model){
+        if(hostHolder.getUser() == null){
+            return "redirect:/reglogin";
+        }else {
+
+            return "notification";
+        }
+    }
     @RequestMapping(path = "/Msg/addMessage", method = RequestMethod.POST)
     public String addMessage(@RequestParam("toName") String toName,
                              @RequestParam("content") String content) {

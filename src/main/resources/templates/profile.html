@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>profile</title>
 </head>
+
 <body>
-    
+<h3>我的粉丝</h3>
+    #foreach($vo in $followers)
+        $!{vo.username} 关注了你<br>
+    #end
+<h3>我的关注对象</h3>
+    #foreach($vo in $followees)
+        $!{vo.username} 是你的关注对象<br>
+    #end
 </body>
 </html>

@@ -9,16 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by h on 17-2-20.
- */
 
 @Controller
 public class HomeController {
@@ -28,6 +24,7 @@ public class HomeController {
     QuestionService questionService;
     @Autowired
     UserService userService;
+
 
     @RequestMapping(path = {"/", "/index", "/home"}, method = RequestMethod.GET)
     public String index(Model model) {
@@ -41,6 +38,7 @@ public class HomeController {
             vo.set("user", userService.getUser(question.getUserId()));
             vos.add(vo);
         }
+
         model.addAttribute("vos", vos);
         return "index";
     }
