@@ -25,12 +25,16 @@
         <input type="hidden" name="toName" value="$!{vo.user.name}">
         <input type="submit" value="私信Ta">
     </form>
-你要关注它吗？
+关注状态: $!{vo.status}
 <form action="/followUser" method="post">
     <input type="hidden" name="followeeId" value="$!{vo.user.id}">
     <input type="submit" value="关注它">
 </form>
 
+<form action="/unFollowUser" method="post">
+    <input type="hidden" name="followeeId" value="$!{vo.user.id}">
+    <input type="submit" value="取消关注">
+</form>
 <strong>问题的标题：  $!{vo.question.title}</strong><br>
 问题的内容：$!{vo.question.content}<br>
 <!--在新窗口中打开链接-->

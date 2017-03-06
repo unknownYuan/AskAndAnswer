@@ -51,7 +51,7 @@ public class FollowController {
         int myId = hostHolder.getUser().getId();
         boolean ret = followService.follow(myId, EntityType.USER, followeeId);
         //关注完之后产生事件
-        eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
+        boolean suss = eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
                 .setActorId(myId)
                 .setEntityId(followeeId)
                 .setEntityType(EntityType.USER)
@@ -65,10 +65,7 @@ public class FollowController {
      * @return
      */
     @RequestMapping(path = {"/unFollowUser"}, method = RequestMethod.POST)
-    public String unFollowUser(@RequestParam("userId") int userId) {
-        if (hostHolder.getUser() == null) {
-            return "redirect:/reglogin";
-        }
+    public String unFollowUser(@RequestParam("followeeId") int userId) {
         boolean ret = followService.unfollow(hostHolder.getUser().getId(), EntityType.USER, userId);
         //关注完之后产生事件
         eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW)
@@ -86,7 +83,7 @@ public class FollowController {
      */
     @RequestMapping(path = {"/followQuestion"}, method = RequestMethod.POST)
     public String followQuestion(@RequestParam("questionId") int questionId) {
-        if (hostHolder.getUser() != null) {
+        if (hostHolder.getUser() == null) {
             return "redirect:/reglogin";
         }
         Question q = questionService.queryQuestionById(questionId);
@@ -110,7 +107,7 @@ public class FollowController {
      */
     @RequestMapping(path = {"/unFollowQuestion"}, method = RequestMethod.POST)
     public String unFollowQuestion(@RequestParam("questionId") int questionId) {
-        if (hostHolder.getUser() != null) {
+        if (hostHolder.getUser() == null) {
             return "redirect:/reglogin";
         }
         Question q = questionService.queryQuestionById(questionId);

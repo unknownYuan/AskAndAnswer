@@ -1,9 +1,13 @@
 package com.haodong.controller;
 
+import com.haodong.model.HostHolder;
 import com.haodong.model.Question;
+import com.haodong.model.User;
 import com.haodong.model.ViewObject;
+import com.haodong.service.FollowService;
 import com.haodong.service.QuestionService;
 import com.haodong.service.UserService;
+import com.haodong.util.EntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +28,10 @@ public class HomeController {
     QuestionService questionService;
     @Autowired
     UserService userService;
-
+    @Autowired
+    FollowService followService;
+    @Autowired
+    HostHolder hostHolder;
 
     @RequestMapping(path = {"/", "/index", "/home"}, method = RequestMethod.GET)
     public String index(Model model) {
@@ -35,10 +42,16 @@ public class HomeController {
             Question question = list.get(i);
             vo.set("question", question);
             //问题和对应的用户应该匹配，不能是随意的id
-            vo.set("user", userService.getUser(question.getUserId()));
+            User user = userService.getUser(question.getUserId());
+            vo.set("user", user);
+            boolean status = followService.isFollower(hostHolder.getUser().getId(), EntityType.USER, user.getId());
+            if (status) {
+                vo.set("status", "已经关注");
+            } else {
+                vo.set("status", "没有关注");
+            }
             vos.add(vo);
         }
-
         model.addAttribute("vos", vos);
         return "index";
     }

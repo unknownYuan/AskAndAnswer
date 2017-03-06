@@ -156,11 +156,11 @@ public class JedisAdapter implements InitializingBean {
         }
     }
 
-    public void lpush(String key, String json) {
+    public long lpush(String key, String json) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            jedis.lpush(key, json);
+            return jedis.lpush(key, json);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -168,6 +168,7 @@ public class JedisAdapter implements InitializingBean {
                 jedis.close();
             }
         }
+        return (long)0;
     }
 
     public List<String> brpop(int timeOut, String key) {
@@ -210,7 +211,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            jedis.zscore(key, member);
+            return jedis.zscore(key, member);
         } catch (Exception e) {
 
         } finally {

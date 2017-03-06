@@ -2,6 +2,7 @@ package com.haodong.service;
 
 import com.haodong.dao.FeedDAO;
 import com.haodong.model.Feed;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 @Service
 public class FeedService {
+    @Autowired
     FeedDAO feedDAO;
 
     /**
@@ -31,8 +33,7 @@ public class FeedService {
      * @return
      */
     public boolean addFeed(Feed feed){
-        feedDAO.addFeed(feed);
-        return feed.getId() > 0;
+        return  feedDAO.addFeed(feed) > 0 ? true : false;
     }
 
     /**

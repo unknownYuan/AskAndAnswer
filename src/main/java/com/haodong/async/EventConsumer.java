@@ -1,6 +1,7 @@
 package com.haodong.async;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyGenerator;
 import org.slf4j.Logger;
@@ -51,6 +52,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
             @Override
             public void run() {
                 while (true) {
+                    //从事件队列中取事件，一一处理
                     String key = RedisKeyGenerator.getBizEventqueue();
                     List<String> events = jedisAdapter.brpop(0, key);
                     if (events != null) {
@@ -59,6 +61,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                             if (message.equals(key)) {
                                 continue;
                             }
+                            //易错点，get set写错
                             EventModel eventModel = JSON.parseObject(message, EventModel.class);
                             if (!config.containsKey(eventModel.getType())) {
                                 logger.error("不能识别的事件类型");

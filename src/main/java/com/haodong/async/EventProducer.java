@@ -14,18 +14,22 @@ public class EventProducer {
     @Autowired
     JedisAdapter jedisAdapter;
 
+    /**
+     * 生产者将事件转化为JSONObject 对象。放入redis中
+     * @param e
+     * @return
+     */
     public boolean fireEvent(EventModel e){
         try {
             //将对象转换为字符串
             String json = JSONObject.toJSONString(e);
             String key = RedisKeyGenerator.getBizEventqueue();
-            jedisAdapter.lpush(key, json);
-            return true;
+            return jedisAdapter.lpush(key, json) > 0 ? true :false;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false;
         } finally {
 
         }
+        return false;
     }
 }

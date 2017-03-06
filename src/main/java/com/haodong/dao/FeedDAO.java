@@ -21,14 +21,16 @@ public interface FeedDAO {
 
     /**
      * 插入
+     *
      * @param feed
      * @return
      */
-    @Insert({"insert into ", TABLE_NAME, INSERT_FIELDS, "values(#{userId}, #{data}, #{createdDate}, #{type})"})
+    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ")values(#{userId}, #{data}, #{createdDate}, #{type})"})
     int addFeed(Feed feed);
 
     /**
      * 拉模式，取动态
+     *
      * @param maxId
      * @param userIds
      * @param count
@@ -41,6 +43,7 @@ public interface FeedDAO {
 
     /**
      * 选择推模式
+     *
      * @param id
      * @return
      */

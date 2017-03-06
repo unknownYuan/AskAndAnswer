@@ -7,6 +7,17 @@
 <body>
 
     这个问题的标题是：$!{question.title}<br>
+
+    <form action="/followQuestion" method="post">
+        <input type="hidden" name = "questionId" value="$!{question.id}">
+        <input type = "submit" value="关注问题">
+    </form>
+
+    <form action="/unFollowQuestion" method="post">
+        <input type="hidden" name = "questionId" value="$!{question.id}">
+        <input type = "submit" value="取消关注">
+    </form>
+
     <!--$!{question.userId}<br>-->
     这个问题的内容是：$!{question.content}<br>
     该问题被创建于：$!{question.createdDate}<br>

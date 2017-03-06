@@ -11,8 +11,11 @@ import com.haodong.service.FeedService;
 import com.haodong.service.QuestionService;
 import com.haodong.service.UserService;
 import com.haodong.util.EntityType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.*;
 
@@ -21,7 +24,7 @@ import java.util.*;
  */
 @Component
 public class FeedHandler implements EventHandler {
-
+    private static final Logger logger = LoggerFactory.getLogger(FeedHandler.class);
     @Autowired
     UserService userService;
     @Autowired
@@ -40,9 +43,10 @@ public class FeedHandler implements EventHandler {
         map.put("userHead", actor.getHeadUrl());
         map.put("userName", actor.getName());
         //如果发生了一条评论或者我关注了一个问题
-        if (model.getType() == EventType.COMMENT || model.getType() == EventType.FOLLOW && model.getEntityType() == EntityType.QUESTION) {
+        if (model.getType() == EventType.COMMENT || (model.getType() == EventType.FOLLOW && model.getEntityType() == EntityType.QUESTION)) {
             Question question = questionService.queryQuestionById(model.getEntityId());
             if (question == null) {
+                logger.error("关注问题时发生异常！");
                 return null;
             }
             map.put("questionId", String.valueOf(question.getId()));
@@ -61,9 +65,13 @@ public class FeedHandler implements EventHandler {
         feed.setData(buildFeedData(eventModel));
         //如果出问题，这个事件我们就不处理了
         if (feed.getData() == null) {
+            logger.error("feed设置数据时出现错误");
             return;
         }
-        feedService.addFeed(feed);
+        boolean success = feedService.addFeed(feed);
+        if(!success){
+            logger.error("添加feed到数据库的时候出错了");
+        }
     }
 
     @Override
