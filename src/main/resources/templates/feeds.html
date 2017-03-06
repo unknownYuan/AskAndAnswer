@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+#macro (comment_question, $vo)
+    你的好友 $!{vo.userName} 有一条新评论 <br>
+    <img src="$!{vo.userHead}"><br>
+    这条动态的标题是：$!{vo.questionTitle}<br>
+#end
+
+#macro (follow_question, $vo)
+你的好友 $!{vo.userName} 有一条新关注 <br>
+<img src="$!{vo.userHead}"><br>
+这条动态的标题是：$!{vo.questionTitle}<br>
+#end
+<head>
+    <meta charset="UTF-8">
+    <title>我的好友动态</title>
+</head>
+<body>
+#foreach($vo in $feeds)
+    #if($vo.type == 1)
+        #comment_question($vo)
+    #elseif($vo.type==4)
+        #follow_question($vo)
+    #end
+#end
+</body>
+</html>

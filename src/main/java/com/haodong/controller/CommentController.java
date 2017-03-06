@@ -1,5 +1,8 @@
 package com.haodong.controller;
 
+import com.haodong.async.EventModel;
+import com.haodong.async.EventProducer;
+import com.haodong.async.EventType;
 import com.haodong.model.Comment;
 import com.haodong.model.HostHolder;
 import com.haodong.model.Question;
@@ -7,6 +10,7 @@ import com.haodong.model.User;
 import com.haodong.service.CommentService;
 import com.haodong.service.QuestionService;
 import com.haodong.service.SensitiveService;
+import com.haodong.service.UserService;
 import com.haodong.util.EntityType;
 import com.haodong.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +30,12 @@ public class CommentController {
     QuestionService questionService;
     @Autowired
     CommentService commentService;
-
     @Autowired
     HostHolder hostHolder;
+    @Autowired
+    EventProducer eventProducer;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(path = {"/addComment"}, method = RequestMethod.POST)
     public String addComment(@RequestParam("questionId") int questionId,
@@ -37,31 +44,25 @@ public class CommentController {
         comment.setContent(content);
         comment.setCreatedDate(new Date());
         comment.setStatus(0);
-        //userId 由网站的拦截器获取
-//        User user = hostHolder.getUser();
-//        System.out.println("-----------------");
-//        System.out.println(user.getId());
-//        System.out.println(user.getName());
-//        System.out.println(user.getHeadUrl());
-//        System.out.println("-----------------");
-        if(hostHolder.getUser().getId() != 0) {
-            comment.setUserId(hostHolder.getUser().getId());
-        }else {
-            //设置匿名用户
-            comment.setUserId(WendaUtil.ANONYMOUS_USERID);
-        }
         comment.setEntityId(questionId);
         comment.setEntityType(EntityType.QUESTION);
         commentService.addComment(comment);
+        //得到这个问题发布者的id
+        int userId  = questionService.queryQuestionById(questionId).getUserId();
         int count = commentService.getComment(questionId, EntityType.QUESTION);
-        System.out.println("---------------------");
-        System.out.println(count);
-        System.out.println("---------------------");
+
+        //产生一条评论事件
+        eventProducer.fireEvent(new EventModel(EventType.COMMENT)
+                .setActorId(hostHolder.getUser().getId())
+                .setEntityId(questionId)
+                .setEntityOwnerId(userId)
+                .setEntityType(EntityType.USER)
+                .setType(EventType.COMMENT));
         //增加完一条评论，更新问题的评论数
         questionService.updateCommentCount(comment.getEntityId(), count);
         //下面的一行是错误的写法
         //return "/question/{questionId}";
         //正确的语法如下
-        return "/question/" + questionId;
+        return "redirect:/question/" + questionId;
     }
 }

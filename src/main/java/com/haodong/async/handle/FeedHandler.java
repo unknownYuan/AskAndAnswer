@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.*;
 
@@ -39,7 +38,7 @@ public class FeedHandler implements EventHandler {
             return null;
         }
         //事件触发者的id
-        map.put("userId", String.valueOf(actor.getId()));
+        //map.put("userId", String.valueOf(actor.getId()));
         map.put("userHead", actor.getHeadUrl());
         map.put("userName", actor.getName());
         //如果发生了一条评论或者我关注了一个问题
@@ -59,6 +58,8 @@ public class FeedHandler implements EventHandler {
     @Override
     public void doHandler(EventModel eventModel) {
         Feed feed = new Feed();
+        //将事件的触发者设置为0-10之间的某个用户，这样更好看一点
+        eventModel.setActorId(new Random().nextInt(10) + 1);
         feed.setCreatedDate(new Date());
         feed.setUserId(eventModel.getActorId());
         feed.setType(eventModel.getType().getValue());

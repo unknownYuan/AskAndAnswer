@@ -1,5 +1,7 @@
 package com.haodong.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Date;
 
 /**
@@ -17,6 +19,7 @@ public class Feed {
     private Date createdDate;
     //JSON的格式
     private String data;
+    private JSONObject object = null;
 
 
     @Override
@@ -64,9 +67,14 @@ public class Feed {
 
     public String getData() {
         return data;
+
     }
 
     public void setData(String data) {
         this.data = data;
+        object = JSONObject.parseObject(data);
+    }
+    public String get(String key){
+        return object == null ? null : object.getString(key);
     }
 }
