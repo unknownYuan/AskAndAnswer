@@ -1,9 +1,6 @@
 package com.haodong.controller;
 
-import com.haodong.model.Comment;
-import com.haodong.model.HostHolder;
-import com.haodong.model.Question;
-import com.haodong.model.ViewObject;
+import com.haodong.model.*;
 import com.haodong.service.CommentService;
 import com.haodong.service.LikeService;
 import com.haodong.service.QuestionService;
@@ -49,15 +46,22 @@ public class QuestionController {
     @RequestMapping(path = "/question/{questionId}")
     public String getQuestion(Model model,
                               @PathVariable("questionId") int questionId) {
+        User tmpUser = null;
+        if (hostHolder.getUser() == null) {
+            tmpUser = userService.getUser(1);
+        } else {
+            tmpUser = hostHolder.getUser();
+        }
+
         Question question = questionService.queryQuestionById(questionId);
         //添加问题到model
         model.addAttribute("question", question);
-        logger.info("title", question.getTitle());
+
         //添加这个问题的评论到model
         List<Comment> comments = commentService.getCommentByEntity(questionId, EntityType.QUESTION);
         List<ViewObject> vos = new ArrayList<>();
-        for (Comment comment:
-             comments) {
+        for (Comment comment :
+                comments) {
             ViewObject vo = new ViewObject();
             //这条评论：$!{vos.vo.comment}
             vo.set("comment", comment);
@@ -73,7 +77,6 @@ public class QuestionController {
     }
 
     @RequestMapping(path = "/question/add", method = {RequestMethod.POST})
-    //@ResponseBody //字符串是我们生成的，不需要返回一个html页面
     public String addQuestion(@RequestParam(value = "title") String title,
                               @RequestParam(value = "content") String content) {
         Question question = new Question();
@@ -91,7 +94,6 @@ public class QuestionController {
         question.setCommentCount(0);
         //如果添加问题成功
         if (questionService.addQuestion(question) > 0) {
-
             String res = WendaUtil.getJSONString(0, "添加问题成功");
             System.out.println(res);
             return "redirect:/";

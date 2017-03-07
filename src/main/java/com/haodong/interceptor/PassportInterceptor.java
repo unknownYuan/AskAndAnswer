@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-/**
- * Created by h on 17-2-21.
- */
 @Component
 public class PassportInterceptor implements HandlerInterceptor {
     @Autowired
@@ -37,18 +34,21 @@ public class PassportInterceptor implements HandlerInterceptor {
                 if (cookie.getName().equals("ticket")) {
                     ticket = cookie.getValue();
                     break;
-                }
+                }else continue;
             }
         }
         if (ticket != null) {
             LoginTicket loginTicket = loginTicketDAO.selectByTicket(ticket);
             if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() == 1) {
                 return false;
+            } else {
+                User user = userDAO.queryById(loginTicket.getUserId());
+                hostHolder.setUsers(user);
+                return true;
             }
-            User user = userDAO.queryById(loginTicket.getUserId());
-            hostHolder.setUsers(user);
+        } else {
+            return true;
         }
-        return true;
     }
 
     @Override

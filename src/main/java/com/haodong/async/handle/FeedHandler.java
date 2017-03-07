@@ -8,9 +8,12 @@ import com.haodong.model.Feed;
 import com.haodong.model.Question;
 import com.haodong.model.User;
 import com.haodong.service.FeedService;
+import com.haodong.service.FollowService;
 import com.haodong.service.QuestionService;
 import com.haodong.service.UserService;
 import com.haodong.util.EntityType;
+import com.haodong.util.JedisAdapter;
+import com.haodong.util.RedisKeyGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +33,16 @@ public class FeedHandler implements EventHandler {
     QuestionService questionService;
     @Autowired
     FeedService feedService;
+    @Autowired
+    FollowService followService;
+    @Autowired
+    JedisAdapter jedisAdapter;
 
     private String buildFeedData(EventModel model) {
         Map<String, String> map = new HashMap<>();
         User actor = userService.getUser(model.getActorId());
         if (actor == null) {
+            logger.error("actor为null异常");
             return null;
         }
         //事件触发者的id
@@ -59,7 +67,8 @@ public class FeedHandler implements EventHandler {
     public void doHandler(EventModel eventModel) {
         Feed feed = new Feed();
         //将事件的触发者设置为0-10之间的某个用户，这样更好看一点
-        eventModel.setActorId(new Random().nextInt(10) + 1);
+        //eventModel.setActorId(new Random().nextInt(10) + 1);
+        eventModel.setActorId(eventModel.getActorId());
         feed.setCreatedDate(new Date());
         feed.setUserId(eventModel.getActorId());
         feed.setType(eventModel.getType().getValue());
@@ -72,6 +81,17 @@ public class FeedHandler implements EventHandler {
         boolean success = feedService.addFeed(feed);
         if(!success){
             logger.error("添加feed到数据库的时候出错了");
+        }else{
+            //向所有的粉丝推送
+            //将所有的粉丝取出来
+            List<Integer> followers = followService.getFollowers(EntityType.USER, eventModel.getActorId(), Integer.MAX_VALUE);
+            //如果粉丝的数量太多，可以每次取100个，取多次推送
+//            followers.add(0);
+            for (int follower:
+                 followers) {
+                String timeLineKey = RedisKeyGenerator.getTimeLineKey(follower);
+                jedisAdapter.lpush(timeLineKey, String.valueOf(feed.getId()));
+            }
         }
     }
 

@@ -236,4 +236,19 @@ public class JedisAdapter implements InitializingBean {
         }
         return new HashSet<String>();
     }
+
+    public List<String> lrange(String timeLineKey, int start, int count) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.lrange(timeLineKey, start, start + count);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
 }

@@ -33,7 +33,7 @@ public interface UserDAO {
     User queryById(int id);
 
     @Select({"select ", STAR, " from ", TABLE_NAME, " where name = #{name}"})
-    User queryByName(String name);
+    User queryByName(@Param("name") String name);
     /**
      * 使用注解更新语句
      *

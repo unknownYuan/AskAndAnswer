@@ -44,10 +44,6 @@ public class FollowController {
      */
     @RequestMapping(path = {"/followUser"}, method = RequestMethod.POST)
     public String followUser(@RequestParam("followeeId") int followeeId) {
-        //如果我没有登陆
-        if (hostHolder.getUser() == null) {
-            return "redirect:/reglogin";
-        }
         int myId = hostHolder.getUser().getId();
         boolean ret = followService.follow(myId, EntityType.USER, followeeId);
         //关注完之后产生事件
@@ -83,9 +79,6 @@ public class FollowController {
      */
     @RequestMapping(path = {"/followQuestion"}, method = RequestMethod.POST)
     public String followQuestion(@RequestParam("questionId") int questionId) {
-        if (hostHolder.getUser() == null) {
-            return "redirect:/reglogin";
-        }
         Question q = questionService.queryQuestionById(questionId);
         if (q == null) {
             return "redirect:/";

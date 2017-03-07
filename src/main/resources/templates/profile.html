@@ -6,13 +6,27 @@
 </head>
 
 <body>
+<h2>我的用户名：$!{localName}</h2>
 <h3>我的粉丝</h3>
     #foreach($vo in $followers)
         $!{vo.username} 关注了你<br>
     #end
+<hr/>
 <h3>我的关注对象</h3>
     #foreach($vo in $followees)
         $!{vo.username} 是你的关注对象<br>
     #end
+<hr/>
+<h3>我关注的问题</h3>
+
+#foreach($question in $questions)
+    这个问题的标题是： $!{question.question.title}
+#end
+
+<h3>好友动态</h3>
+<h3>pull动态</h3>
+<a target="_blank" href="/pullFeeds">pull动态</a>
+<h3>push动态</h3>
+<a target="_blank" href="/pushFeeds">push动态</a>
 </body>
 </html>
