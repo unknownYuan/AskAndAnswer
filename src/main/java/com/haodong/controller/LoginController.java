@@ -25,6 +25,8 @@ public class LoginController {
     @Autowired
     EventProducer eventProducer;
 
+
+
     //登陆模块
     @RequestMapping(path = {"/login/"})
     public String login(Model model,
@@ -86,6 +88,6 @@ public class LoginController {
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
     public String logout(@CookieValue("ticket") String ticket) {
         userService.logout(ticket);
-        return "redirect:/";
+        return "redirect:/reglogin";
     }
 }

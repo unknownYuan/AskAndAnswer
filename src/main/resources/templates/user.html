@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+#macro (comment_question, $vo)
+<img src="$!{vo.userHead}"><br>
+评论了问题<br>
+
+ <br>
+<hr/>
+#end
+
+#macro (follow_question, $vo)
+<img src="$!{vo.userHead}"><br>
+关注了问题<br>
+
+<a href="/question/$!{vo.questionId}">$!{vo.questionTitle}</a> <br>
+<hr/>
+#end
+
+<head>
+    <meta charset="UTF-8">
+    <title>userInfo</title>
+</head>
+<body>
+<strong>详细信息</strong>
+昵称：$!{userName}<br>
+<img src="$!{headUrl}"> <br>
+#foreach($feed in $feeds)
+#if($feed.type == 1)
+#comment_question($feed)
+#elseif($feed.type==4)
+#follow_question($feed)
+#end
+#end
+</body>
+</html>

@@ -80,9 +80,6 @@ public class FollowController {
     @RequestMapping(path = {"/followQuestion"}, method = RequestMethod.POST)
     public String followQuestion(@RequestParam("questionId") int questionId) {
         Question q = questionService.queryQuestionById(questionId);
-        if (q == null) {
-            return "redirect:/";
-        }
         boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.QUESTION, questionId);
         //关注完之后产生事件
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW)

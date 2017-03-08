@@ -7,6 +7,7 @@
 <body>
 
     这个问题的标题是：$!{question.title}<br>
+    当前关注状态：$!{followQuestionStatus}<br>
 
     <form action="/followQuestion" method="post">
         <input type="hidden" name = "questionId" value="$!{question.id}">
@@ -19,6 +20,7 @@
     </form>
 
     <!--$!{question.userId}<br>-->
+    关于作者：<a href="/user/$!{question.userId}">$!{asker}</a><br>
     这个问题的内容是：$!{question.content}<br>
     该问题被创建于：$!{question.createdDate}<br>
     被评论：$!{question.commentCount} 次<br>

@@ -20,13 +20,13 @@
 <h3>我关注的问题</h3>
 
 #foreach($question in $questions)
-    这个问题的标题是： $!{question.question.title}
+<strong>标题 </strong> <a href="/question/$!{question.question.id}">$!{question.question.title}</a> <br>
 #end
 
-<h3>好友动态</h3>
-<h3>pull动态</h3>
-<a target="_blank" href="/pullFeeds">pull动态</a>
-<h3>push动态</h3>
-<a target="_blank" href="/pushFeeds">push动态</a>
+<!--<h3>好友动态</h3>-->
+<!--<h3>pull动态</h3>-->
+<!--<a target="_blank" href="/pullFeeds">pull动态</a>-->
+<!--<h3>push动态</h3>-->
+<!--<a target="_blank" href="/pushFeeds">push动态</a>-->
 </body>
 </html>

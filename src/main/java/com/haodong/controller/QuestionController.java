@@ -1,10 +1,7 @@
 package com.haodong.controller;
 
 import com.haodong.model.*;
-import com.haodong.service.CommentService;
-import com.haodong.service.LikeService;
-import com.haodong.service.QuestionService;
-import com.haodong.service.UserService;
+import com.haodong.service.*;
 import com.haodong.util.EntityType;
 import com.haodong.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +40,8 @@ public class QuestionController {
     UserService userService;
     @Autowired
     LikeService likeService;
+    @Autowired
+    FollowService followService;
 
     @RequestMapping(path = "/question/{questionId}")
     public String getQuestion(Model model,
@@ -56,6 +56,12 @@ public class QuestionController {
         Question question = questionService.queryQuestionById(questionId);
         //添加问题到model
         model.addAttribute("question", question);
+        model.addAttribute("asker", userService.getUser(question.getUserId()).getName());
+        if(followService.isFollower(tmpUser.getId(), EntityType.QUESTION, questionId)){
+            model.addAttribute("followQuestionStatus", "已经关注");
+        } else {
+            model.addAttribute("followQuestionStatus", "暂未关注");
+        }
 
         //添加这个问题的评论到model
         List<Comment> comments = commentService.getCommentByEntity(questionId, EntityType.QUESTION);
