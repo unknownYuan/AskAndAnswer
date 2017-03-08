@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -46,11 +47,17 @@ public interface MessageDAO {
 //    " where from_id = #{userId} or to_id = #{userId} order by created_date desc) tt group by conversation_id order by created_date desc limit #{offset}, #{limit}"})
 //    @Select({"select ", INSERT_FIELDS, " , count(id) as id from ( select * from ", TABLE_NAME,
 //            " where from_id=#{userId} or to_id=#{userId} order by created_date desc) tt  order by created_date desc limit #{offset}, #{limit}"})
-    @Select({"select * from ", TABLE_NAME, " where from_id = #{userId} or to_id = #{userId} limit #{offset}, #{limit}"})
+    //select * from message where id = (select max(id) as maxId from message where conversation_id = conversation_id);
+    @Select({"select ",STAR," from ", TABLE_NAME, " where id = (select max(id) as maxId from ", TABLE_NAME, " where conversation_id = conversation_id)"})
     List<Message> getConversationList(@Param("userId") int userId,
                                       @Param("offset") int offset,
                                       @Param("limit") int limit);
+//    @Select({"select ",STAR," from ", TABLE_NAME, " where from_id = #{userId} or to_id = #{userId} limit #{offset}, #{limit}"})
+//    List<Message> getConversationList(@Param("userId") int userId,
+//                                      @Param("offset") int offset,
+//                                      @Param("limit") int limit);
     @Select({"select count(id) from ", TABLE_NAME, " where has_read = 0 and to_id = #{userId} and conversation_id = #{conversationId}"})
     int getConversationUnreadCount(@Param("conversationId") String conversationId,
                              @Param("userId") int userId);
+//    @Select({"select "})
 }

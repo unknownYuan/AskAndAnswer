@@ -11,17 +11,54 @@
 <img src="$!{vo.userHead}"><br>
 这条动态的标题是：$!{vo.questionTitle}<br>
 #end
+
 <head>
     <meta charset="UTF-8">
     <title>我的好友动态</title>
 </head>
+
+
 <body>
+<a target="_blank" href="/profile">我的个人主页</a><br>
+<a target="_blank" href="/msg/notification">我的消息/我的通知</a><br>
+<hr/>
+<form action="/question/add" method="post">
+    title:<br>
+    <input type="text" name="title" value="">
+    <br>
+    content:<br>
+    <input type="text" name="content" value="">
+    <br><br>
+    <input type="submit" value="添加问题">
+</form>
 #foreach($vo in $feeds)
     #if($vo.type == 1)
         #comment_question($vo)
     #elseif($vo.type==4)
         #follow_question($vo)
     #end
+#end
+
+#foreach($vo in $vos)
+<strong>标题</strong>
+<a target="_blank" href = "/question/$!{vo.question.id}">$!{vo.question.title}</a>
+<br>
+关注状态：$!{vo.status}<br>
+<img src="$!{vo.headUrl}">
+发布者：$!{vo.userName}<br>
+<form action="/followQuestion" method="post">
+    <input type="hidden" name = "questionId" value="$!{question.id}">
+    <input type = "submit" value="关注问题">
+</form>
+
+<form action="/unFollowQuestion" method="post">
+    <input type="hidden" name = "questionId" value="$!{question.id}">
+    <input type = "submit" value="取消关注">
+</form>
+<strong>正文</strong>$!{vo.question.content}<br>
+$!{vo.question.createdDate} 被创建<br>
+被评论：$!{vo.question.commentCount} 次<br>
+<hr/>
 #end
 </body>
 </html>

@@ -24,6 +24,7 @@ public class FollowHandler implements EventHandler{
     UserService userService;
     @Autowired
     MessageService messageService;
+
     @Override
     public void doHandler(EventModel eventModel) {
         Message message = new Message();

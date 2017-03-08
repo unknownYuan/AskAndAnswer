@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,14 +28,20 @@ public class MessageController {
     UserService userService;
 
     @RequestMapping(path = {"/msg/notification"}, method = RequestMethod.GET)
-    public String notificate(Model model){
-        if(hostHolder.getUser() == null){
-            return "redirect:/reglogin";
-        }else {
-
-            return "notification";
+    public String notificate(Model model) {
+        int localUserId = hostHolder.getUser().getId();
+        List<Message> messages = messageService.getConversationList(localUserId);
+        List<ViewObject> vos = new ArrayList<>();
+        for (Message m:
+             messages) {
+            ViewObject vo = new ViewObject();
+            vo.set("message", m);
+            vos.add(vo);
         }
+        model.addAttribute("vos", vos);
+        return "notification";
     }
+
     @RequestMapping(path = "/Msg/addMessage", method = RequestMethod.POST)
     public String addMessage(@RequestParam("toName") String toName,
                              @RequestParam("content") String content) {

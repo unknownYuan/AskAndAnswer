@@ -8,6 +8,8 @@ import com.haodong.model.User;
 import com.haodong.service.MessageService;
 import com.haodong.service.UserService;
 import com.haodong.util.WendaUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +17,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by torch on 17-3-1.
- */
 @Component
-public class LikeHandler implements EventHandler{
-
+public class LikeHandler implements EventHandler {
+    private static final Logger logger = LoggerFactory.getLogger(LikeHandler.class);
     @Autowired
     UserService userService;
     @Autowired
@@ -29,19 +28,26 @@ public class LikeHandler implements EventHandler{
     @Override
     public void doHandler(EventModel eventModel) {
         Message message = new Message();
-        //系统通知
-        message.setFromId(WendaUtil.SYSTEM_USERID);
+        message.setFromId(eventModel.getActorId());
         //给谁点的赞
         message.setToId(eventModel.getEntityOwnerId());
         message.setCreatedDate(new Date());
-        //触发事件的id
+        //触发事件的user
         User user = userService.getUser(eventModel.getActorId());
-        message.setContent("用户" + user.getName() + "给你点了赞!");
+        if (eventModel.getType() == EventType.LIKE) {
+            message.setContent("用户" + user.getName() + "赞同了你的评论!");
+        } else {
+            if (eventModel.getType() == EventType.DISLIKE) {
+                message.setContent("用户" + user.getName() + "反对了你的评论！");
+            } else {
+                logger.error("出现未知类型message异常！");
+            }
+        }
         messageService.addMessage(message);
     }
 
     @Override
     public List<EventType> getSupportEventTypes() {
-        return Arrays.asList(EventType.LIKE);
+        return Arrays.asList(new EventType[]{EventType.LIKE, EventType.DISLIKE});
     }
 }

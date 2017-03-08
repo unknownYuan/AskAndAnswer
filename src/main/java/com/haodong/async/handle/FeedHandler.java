@@ -21,9 +21,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-/**
- * Created by torch on 17-3-5.
- */
 @Component
 public class FeedHandler implements EventHandler {
     private static final Logger logger = LoggerFactory.getLogger(FeedHandler.class);

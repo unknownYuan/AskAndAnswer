@@ -35,28 +35,8 @@ public class HomeController {
 
     @RequestMapping(path = {"/", "/index", "/home"}, method = RequestMethod.GET)
     public String index(Model model) {
-            //显示timeLine
-            return "redirect:/pullFeeds";
-            //如果是匿名用户,则挑出数据库中最新的10条数据
-//            List<Question> list = questionService.getLatestQuestions(0, 0, 100);
-//            List<ViewObject> vos = new ArrayList<>();
-//            for (int i = 0; i < list.size(); i++) {
-//                ViewObject vo = new ViewObject();
-//                Question question = list.get(i);
-//                vo.set("question", question);
-//                //问题和对应的用户应该匹配，不能是随意的id
-//                User user = userService.getUser(question.getUserId());
-//                vo.set("user", user);
-//                //boolean status = followService.isFollower(hostHolder.getUser().getId(), EntityType.USER, user.getId());
-////                if (status) {
-////                    vo.set("status", "已经关注");
-////                } else {
-//                    vo.set("status", "没有关注");
-////                }
-//                vos.add(vo);
-//            }
-//            model.addAttribute("vos", vos);
-//            return "index";
-        }
+        //显示timeLine
+        return "redirect:/pullFeeds";
     }
+}
 

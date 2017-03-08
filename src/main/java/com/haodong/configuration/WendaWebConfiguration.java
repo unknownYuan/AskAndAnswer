@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * Created by h on 17-2-21.
- */
+
 @Component
 public class WendaWebConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
@@ -28,6 +26,9 @@ public class WendaWebConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/followQuestion");
         registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/question/add");
         registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/");
+        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/like");
+        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/addComment");
+        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/dislike");
 
         super.addInterceptors(registry);
     }

@@ -40,10 +40,12 @@ public class CommentController {
     @RequestMapping(path = {"/addComment"}, method = RequestMethod.POST)
     public String addComment(@RequestParam("questionId") int questionId,
                              @RequestParam("content") String content){
+        int localUserId = hostHolder.getUser().getId();
         Comment comment = new Comment();
+        comment.setUserId(localUserId);
         comment.setContent(content);
         comment.setCreatedDate(new Date());
-        comment.setStatus(0);
+        comment.setStatus(0);//0表示没有被删除
         comment.setEntityId(questionId);
         comment.setEntityType(EntityType.QUESTION);
         commentService.addComment(comment);

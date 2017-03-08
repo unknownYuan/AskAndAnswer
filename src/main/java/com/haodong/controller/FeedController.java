@@ -1,9 +1,10 @@
 package com.haodong.controller;
 
-import com.haodong.model.Feed;
-import com.haodong.model.HostHolder;
+import com.haodong.model.*;
 import com.haodong.service.FeedService;
 import com.haodong.service.FollowService;
+import com.haodong.service.QuestionService;
+import com.haodong.service.UserService;
 import com.haodong.util.EntityType;
 import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyGenerator;
@@ -32,6 +33,11 @@ public class FeedController {
     @Autowired
     JedisAdapter jedisAdapter;
 
+    @Autowired
+    QuestionService questionService;
+    @Autowired
+    UserService userService;
+
     /**
      * 拉模式，其实就是从数据库中取出来就可以
      *
@@ -44,7 +50,28 @@ public class FeedController {
         //首先获取自己的关注对象
         List<Integer> followeeIds = followService.getFollowees(localUserId, EntityType.USER, 0, Integer.MAX_VALUE);
         List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE, followeeIds, 10);
-        model.addAttribute("feeds", feeds);
+        if(feeds.size() < 10){
+            //当userId!=0时只会获取自己的信息，userId=0时会获取所有人的信息
+            List<Question> questions = questionService.getLatestQuestions(0, 0, 10);
+            List<ViewObject> vos = new ArrayList<>();
+            for (Question q:
+                 questions) {
+                ViewObject vo = new ViewObject();
+                vo.set("question", q);
+                if(localUserId == q.getUserId()){
+                    vo.set("status", "已经关注");
+                } else {
+                    vo.set("status", "暂未关注");
+                }
+                User user = userService.getUser(q.getUserId());
+                vo.set("userName", user.getName());
+                vo.set("headUrl", user.getHeadUrl());
+                vos.add(vo);
+            }
+            model.addAttribute("vos", vos);
+        }else {
+            model.addAttribute("feeds", feeds);
+        }
         return "feeds";
     }
 
