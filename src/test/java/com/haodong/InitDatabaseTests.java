@@ -72,7 +72,7 @@ public class InitDatabaseTests {
 
             boolean ret = followService.follow(userId, EntityType.QUESTION, i+1);
             //关注完之后产生事件
-            eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
+            eventProducer.fireEvent(new EventModel(EventType.FOLLOW_QUESTION)
                     .setActorId(userId)
                     .setEntityId(i+1)
                     .setEntityType(EntityType.QUESTION)

@@ -6,6 +6,8 @@ import com.haodong.model.User;
 import com.haodong.model.ViewObject;
 import com.haodong.service.MessageService;
 import com.haodong.service.UserService;
+import com.haodong.util.JedisAdapter;
+import com.haodong.util.RedisKeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +28,23 @@ public class MessageController {
     HostHolder hostHolder;
     @Autowired
     UserService userService;
+    @Autowired
+    JedisAdapter jedisAdapter;
 
     @RequestMapping(path = {"/msg/notification"}, method = RequestMethod.GET)
     public String notificate(Model model) {
         int localUserId = hostHolder.getUser().getId();
-        List<Message> messages = messageService.getConversationList(localUserId);
+        //List<Message> messages = messageService.getConversationList(localUserId);
+        //
+        String commentQuestionKey = RedisKeyGenerator.getCommentQuestionKey(localUserId);
+        List<String> strings = jedisAdapter.lrange(commentQuestionKey, 0, Integer.MAX_VALUE);
+        List<Message> messages = new ArrayList<>();
+        for (String s:
+             strings) {
+            int messageId = Integer.parseInt(s);
+            Message message = messageService.getMessageById(messageId);
+            messages.add(message);
+        }
         List<ViewObject> vos = new ArrayList<>();
         for (Message m:
              messages) {

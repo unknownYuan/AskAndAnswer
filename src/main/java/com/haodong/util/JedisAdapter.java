@@ -156,11 +156,11 @@ public class JedisAdapter implements InitializingBean {
         }
     }
 
-    public long lpush(String key, String json) {
+    public long lpush(String key, String feedId) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            return jedis.lpush(key, json);
+            return jedis.lpush(key, feedId);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

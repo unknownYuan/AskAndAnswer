@@ -44,7 +44,7 @@ public class FeedController {
      * @param model
      * @return
      */
-    @RequestMapping(path = {"/", "/pullFeeds"}, method = RequestMethod.GET)
+    @RequestMapping(path = {"/", "/pullFeeds","/home", "/index"}, method = RequestMethod.GET)
     public String getPullFeeds(Model model) {
         int localUserId = hostHolder.getUser().getId();
         //首先获取自己的关注对象

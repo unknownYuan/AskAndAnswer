@@ -47,7 +47,7 @@ public class FollowController {
         int myId = hostHolder.getUser().getId();
         boolean ret = followService.follow(myId, EntityType.USER, followeeId);
         //关注完之后产生事件
-        boolean suss = eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
+        boolean suss = eventProducer.fireEvent(new EventModel(EventType.FOLLOW_USER)
                 .setActorId(myId)
                 .setEntityId(followeeId)
                 .setEntityType(EntityType.USER)
@@ -64,7 +64,7 @@ public class FollowController {
     public String unFollowUser(@RequestParam("followeeId") int userId) {
         boolean ret = followService.unfollow(hostHolder.getUser().getId(), EntityType.USER, userId);
         //关注完之后产生事件
-        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW)
+        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW_USER)
                 .setActorId(hostHolder.getUser().getId())
                 .setEntityId(userId)
                 .setEntityType(EntityType.USER)
@@ -82,7 +82,7 @@ public class FollowController {
         Question q = questionService.queryQuestionById(questionId);
         boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.QUESTION, questionId);
         //关注完之后产生事件
-        eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
+        eventProducer.fireEvent(new EventModel(EventType.FOLLOW_QUESTION)
                 .setActorId(hostHolder.getUser().getId())
                 .setEntityId(questionId)
                 .setEntityType(EntityType.QUESTION)
@@ -106,7 +106,7 @@ public class FollowController {
         }
         boolean ret = followService.unfollow(hostHolder.getUser().getId(), EntityType.QUESTION, questionId);
         //关注完之后产生事件
-        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW)
+        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW_QUESTION)
                 .setActorId(hostHolder.getUser().getId())
                 .setEntityId(questionId)
                 .setEntityType(EntityType.QUESTION)

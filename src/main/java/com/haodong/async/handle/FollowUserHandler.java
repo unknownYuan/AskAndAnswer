@@ -19,13 +19,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-/**
- * 别人关注了我
- */
 @Component
-public class FollowHandler implements EventHandler{
+public class FollowUserHandler implements EventHandler{
 
-    private static final Logger logger = LoggerFactory.getLogger(FollowHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(FollowUserHandler.class);
     @Autowired
     UserService userService;
     @Autowired
@@ -37,10 +34,9 @@ public class FollowHandler implements EventHandler{
         message.setFromId(eventModel.getActorId());
         message.setToId(eventModel.getEntityOwnerId());
         message.setCreatedDate(new Date());
-        //事件的发起者
         User user = userService.getUser(eventModel.getActorId());
         if(eventModel.getEntityType() == EntityType.USER){
-            message.setContent("用户" + user.getName() + "关注了你！");
+            message.setContent("用户" + user.getName() + "最近关注了你！");
         }else {
             logger.error("事件类型异常");
         }
@@ -49,6 +45,6 @@ public class FollowHandler implements EventHandler{
 
     @Override
     public List<EventType> getSupportEventTypes() {
-        return Arrays.asList(EventType.FOLLOW);
+        return Arrays.asList(EventType.FOLLOW_USER);
     }
 }

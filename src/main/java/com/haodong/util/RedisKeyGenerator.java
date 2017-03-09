@@ -11,6 +11,8 @@ public class RedisKeyGenerator {
     private static String BIZ_EVENTQUEUE = "EVENT_QUEUE";
     private static String BIZ_FOLLOWER = "FOLLOWER";
     private static String BIZ_FOLLOWEE= "FOLLOWEE";
+    private static String comment_question = "comment_question";
+    private static String comment_comment = "comment_comment";
 
     //粉丝的key,通过这个键可以获得我的粉丝集合
     public static String getFollowerKey(int entityType, int entityId){
@@ -36,5 +38,13 @@ public class RedisKeyGenerator {
 
     public static String getTimeLineKey(int userId) {
         return BIZ_TIMELINE + SPLIT + String.valueOf(userId);
+    }
+
+    public static String getCommentQuestionKey(int followerId) {
+        return comment_question + SPLIT + followerId;
+    }
+
+    public static String getCommentCommentKey(int entityOwnerId) {
+        return comment_comment + SPLIT + entityOwnerId;
     }
 }

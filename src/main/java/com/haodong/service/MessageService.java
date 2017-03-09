@@ -17,6 +17,9 @@ public class MessageService {
     @Autowired
     SensitiveService sensitiveService;
 
+    public Message getMessageById(int id){
+        return messageDAO.getMessage(id);
+    }
     public int addMessage(Message message) {
         message.setContent(sensitiveService.filter(message.getContent()));
         return messageDAO.addMessage(message) > 0 ? message.getId() : 0;

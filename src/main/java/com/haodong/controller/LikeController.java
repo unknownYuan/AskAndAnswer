@@ -47,7 +47,7 @@ public class LikeController {
             return "redirect:/question/" + String.valueOf(commentService.getCommentById(commentId).getEntityId());
         } else {
             eventProducer.fireEvent(
-                    new EventModel(EventType.LIKE)
+                    new EventModel(EventType.LIKE_COMMENT)
                             .setActorId(hostHolder.getUser().getId())
                             .setEntityId(commentId)
                             .setEntityType(EntityType.COMMENT)
@@ -74,7 +74,7 @@ public class LikeController {
             return "redirect:/question/" + String.valueOf(commentService.getCommentById(commentId).getEntityId());
         } else {
             eventProducer.fireEvent(
-                    new EventModel(EventType.DISLIKE)
+                    new EventModel(EventType.DISLIKE_COMMENT)
                             .setActorId(hostHolder.getUser().getId())
                             .setEntityId(commentId)
                             .setEntityType(EntityType.COMMENT)

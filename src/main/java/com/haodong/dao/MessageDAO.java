@@ -21,6 +21,8 @@ public interface MessageDAO {
     String INSERT_FIELDS = " from_id, to_id, content, created_date, has_read, conversation_id ";
     String STAR = " id, " + INSERT_FIELDS;
 
+    @Select({"select ", STAR, " from ", TABLE_NAME, " where id = #{id}"})
+    Message getMessage(@Param("id") int id);
     /**
      * 插入一条信息
      *
