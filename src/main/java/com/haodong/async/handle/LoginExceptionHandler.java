@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 登陆异常
+ */
 @Component
 public class LoginExceptionHandler implements EventHandler {
     @Autowired

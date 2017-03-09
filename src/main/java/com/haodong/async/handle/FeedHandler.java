@@ -21,6 +21,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * 好友动态
+ * 我关注的人赞同了回答
+ * 我关注的人回答了问题
+ * 我关注的人关注了某个问题
+ * 我关注的人回答了某个问题
+ */
 @Component
 public class FeedHandler implements EventHandler {
     private static final Logger logger = LoggerFactory.getLogger(FeedHandler.class);
@@ -39,11 +46,9 @@ public class FeedHandler implements EventHandler {
         Map<String, String> map = new HashMap<>();
         User actor = userService.getUser(model.getActorId());
         if (actor == null) {
-            logger.error("actor为null异常");
+            logger.error("actor出现异常");
             return null;
         }
-        //事件触发者的id
-        //map.put("userId", String.valueOf(actor.getId()));
         map.put("userHead", actor.getHeadUrl());
         map.put("userName", actor.getName());
         //如果发生了一条评论或者我关注了一个问题
@@ -75,6 +80,7 @@ public class FeedHandler implements EventHandler {
             logger.error("feed设置数据时出现错误");
             return;
         }
+        //添加到mysql数据库中，支持pull
         boolean success = feedService.addFeed(feed);
         if(!success){
             logger.error("添加feed到数据库的时候出错了");
@@ -87,6 +93,7 @@ public class FeedHandler implements EventHandler {
             for (int follower:
                  followers) {
                 String timeLineKey = RedisKeyGenerator.getTimeLineKey(follower);
+                //添加到redis中，支持push
                 jedisAdapter.lpush(timeLineKey, String.valueOf(feed.getId()));
             }
         }

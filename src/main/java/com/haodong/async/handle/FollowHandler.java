@@ -9,17 +9,23 @@ import com.haodong.service.MessageService;
 import com.haodong.service.UserService;
 import com.haodong.util.EntityType;
 import com.haodong.util.WendaUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * 别人关注了我
+ */
 @Component
 public class FollowHandler implements EventHandler{
 
+    private static final Logger logger = LoggerFactory.getLogger(FollowHandler.class);
     @Autowired
     UserService userService;
     @Autowired
@@ -28,15 +34,15 @@ public class FollowHandler implements EventHandler{
     @Override
     public void doHandler(EventModel eventModel) {
         Message message = new Message();
-        message.setFromId(WendaUtil.SYSTEM_USERID);
+        message.setFromId(eventModel.getActorId());
         message.setToId(eventModel.getEntityOwnerId());
         message.setCreatedDate(new Date());
         //事件的发起者
         User user = userService.getUser(eventModel.getActorId());
-        if(eventModel.getEntityType() == EntityType.QUESTION){
-            message.setContent("用户" + user.getName() + "关注了你的问题!");
-        }else {
+        if(eventModel.getEntityType() == EntityType.USER){
             message.setContent("用户" + user.getName() + "关注了你！");
+        }else {
+            logger.error("事件类型异常");
         }
         messageService.addMessage(message);
     }

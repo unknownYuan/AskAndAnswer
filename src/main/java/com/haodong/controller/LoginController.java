@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -26,9 +27,8 @@ public class LoginController {
     EventProducer eventProducer;
 
 
-
     //登陆模块
-    @RequestMapping(path = {"/login/"})
+    @RequestMapping(path = {"/login"})
     public String login(Model model,
                         @RequestParam(value = "username") String username,
                         @RequestParam(value = "password") String password,
@@ -50,16 +50,21 @@ public class LoginController {
                         .setExt("username", username)
                         .setActorId(userService.getUserByName(username).getId()));
                 if (StringUtils.isBlank(next)) {
-                    return "redirect:/";
+                    return "redirect:/pullFeeds";
                 } else {
-                    String res = "redirect:" + next;
+                    String res;
+                    if (next.equals("/")) {
+                        res = "redirect:" + next;
+                    } else {
+                        res = "redirect:" + "/pullFeeds";
+                    }
                     return res;
                 }
             }
         } catch (Exception e) {
             logger.error("登陆异常" + e.getMessage());
-            return "login";
         }
+        return "redirect:/pullFeeds";
     }
 
     @RequestMapping(path = {"/reg/"})
@@ -81,7 +86,9 @@ public class LoginController {
 
     @RequestMapping(path = "/reglogin", method = RequestMethod.GET)
     public String reglogin(@RequestParam(value = "next", required = false) String next, Model model) {
-        model.addAttribute("next", next);
+        if(!StringUtils.isBlank(next)) {
+            model.addAttribute("next", next);
+        }
         return "login";
     }
 

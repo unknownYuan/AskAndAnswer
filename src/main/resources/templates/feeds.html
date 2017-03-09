@@ -50,7 +50,7 @@
 <br>
 关注状态：$!{vo.status}<br>
 <img src="$!{vo.headUrl}">
-发布者：$!{vo.userName}<br>
+发布者：<a href="/user/$!{vo.question.userId}">$!{vo.userName}</a><br>
 <form action="/followQuestion" method="post">
     <input type="hidden" name="questionId" value="$!{question.id}">
     <input type="submit" value="关注问题">

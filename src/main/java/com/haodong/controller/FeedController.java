@@ -44,14 +44,14 @@ public class FeedController {
      * @param model
      * @return
      */
-    @RequestMapping(path = "/pullFeeds", method = RequestMethod.GET)
-    private String getPullFeeds(Model model) {
+    @RequestMapping(path = {"/", "/pullFeeds"}, method = RequestMethod.GET)
+    public String getPullFeeds(Model model) {
         int localUserId = hostHolder.getUser().getId();
         //首先获取自己的关注对象
         List<Integer> followeeIds = followService.getFollowees(localUserId, EntityType.USER, 0, Integer.MAX_VALUE);
         List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE, followeeIds, 10);
 
-        if(feeds.size() < 10){
+        if(feeds.size() < 5){
             List<Question> questions = questionService.getLatestQuestions(0, 0, 10);
             List<ViewObject> vos = new ArrayList<>();
             for (Question q:

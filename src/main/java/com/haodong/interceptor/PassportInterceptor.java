@@ -34,13 +34,13 @@ public class PassportInterceptor implements HandlerInterceptor {
                 if (cookie.getName().equals("ticket")) {
                     ticket = cookie.getValue();
                     break;
-                }else continue;
+                } else continue;
             }
         }
         if (ticket != null) {
             LoginTicket loginTicket = loginTicketDAO.selectByTicket(ticket);
             if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() == 1) {
-                return false;
+                return true;
             } else {
                 User user = userDAO.queryById(loginTicket.getUserId());
                 hostHolder.setUsers(user);

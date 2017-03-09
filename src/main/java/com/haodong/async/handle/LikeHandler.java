@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 被人给我点了赞同或者反对
+ */
 @Component
 public class LikeHandler implements EventHandler {
     private static final Logger logger = LoggerFactory.getLogger(LikeHandler.class);

@@ -26,8 +26,8 @@ public class WendaWebConfiguration extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/followUser")
                 .addPathPatterns("/followQuestion")
                 .addPathPatterns("/question/add")
-                .addPathPatterns("/")
                 .addPathPatterns("/like")
+                .addPathPatterns("/")
                 .addPathPatterns("/addComment")
                 .addPathPatterns("/dislike")
                 .addPathPatterns("/msg/notification");

@@ -55,11 +55,10 @@ public class CommentController {
 
         //产生一条评论事件
         eventProducer.fireEvent(new EventModel(EventType.COMMENT)
-                .setActorId(hostHolder.getUser().getId())
+                .setActorId(localUserId)
                 .setEntityId(questionId)
                 .setEntityOwnerId(userId)
-                .setEntityType(EntityType.USER)
-                .setType(EventType.COMMENT));
+                .setEntityType(EntityType.QUESTION));
         //增加完一条评论，更新问题的评论数
         questionService.updateCommentCount(comment.getEntityId(), count);
         //下面的一行是错误的写法
