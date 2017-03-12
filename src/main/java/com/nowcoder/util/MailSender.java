@@ -52,7 +52,7 @@ public class MailSender implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         mailSender = new JavaMailSenderImpl();
         mailSender.setUsername("1593028064@qq.com");
-        mailSender.setPassword("liming1234");
+        mailSender.setPassword("xxxxxxxxxxx");
         mailSender.setHost("smtp.exmail.qq.com");
         //mailSender.setHost("smtp.qq.com");
         mailSender.setPort(465);
