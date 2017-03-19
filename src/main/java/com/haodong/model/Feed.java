@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Created by haodong on 2016/8/12.
+ * Created by haodong on 12.
  */
 public class Feed {
     private int id;

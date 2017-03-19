@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by rainday on 16/8/11.
+ * Created by haodong on 16/8/11.
  */
 @Service
 public class FollowService {

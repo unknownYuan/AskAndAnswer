@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by haodong on 2016/8/28.
+ * Created by haodong on 28.
  */
 @Component
 public class AddQuestionHandler implements EventHandler {
