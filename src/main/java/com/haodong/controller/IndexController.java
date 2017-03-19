@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
- * Created by haodong on 2016/7/10.
+ * Created by haodong
  */
 //@Controller
 public class IndexController {
