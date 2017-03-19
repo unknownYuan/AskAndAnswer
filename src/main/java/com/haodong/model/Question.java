@@ -3,7 +3,7 @@ package com.haodong.model;
 import java.util.Date;
 
 /**
- * Created by haodong on 2016/7/15.
+ * Created by haodong on 15.
  */
 public class Question {
     private int id;

@@ -3,7 +3,7 @@ package com.haodong.service;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by haodong on 2016/7/10.
+ * Created by haodong on 10.
  */
 @Service
 public class WendaService {

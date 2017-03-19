@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * Created by haodong on 2016/7/2.
+ * Created by haodong on 2.
  */
 @Service
 public class UserService {

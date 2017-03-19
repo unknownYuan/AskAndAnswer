@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 
 /**
- * Created by haodong on 2016/7/24.
+ * Created by haodong on 24.
  */
 @Controller
 public class CommentController {

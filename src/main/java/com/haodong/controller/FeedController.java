@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by haodong on 2016/7/15.
+ * Created by haodong on 15.
  */
 @Controller
 public class FeedController {

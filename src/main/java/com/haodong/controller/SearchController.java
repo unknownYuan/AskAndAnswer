@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by haodong on 2016/7/24.
+ * Created by haodong
  */
 @Controller
 public class SearchController {

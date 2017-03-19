@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by haodong on 2016/7/15. // course@haodong.com NKnk66
+ * Created by haodong on 15. // course@haodong.com NKnk66
  */
 @Service
 public class MailSender implements InitializingBean {

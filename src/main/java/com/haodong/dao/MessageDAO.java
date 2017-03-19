@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
- * Created by haodong on 2016/7/24.
+ * Created by haodong on 24.
  */
 @Mapper
 public interface MessageDAO {

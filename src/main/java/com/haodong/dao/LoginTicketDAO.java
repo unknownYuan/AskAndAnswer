@@ -4,7 +4,7 @@ import com.haodong.model.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
 /**
- * Created by haodong on 2016/7/2.
+ * Created by haodong on 2.
  */
 @Mapper
 public interface LoginTicketDAO {

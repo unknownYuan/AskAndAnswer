@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by haodong on 2016/7/10.
+ * Created by haodong
  */
-@Controller
-public class SettingController {
-    @Autowired
-    WendaService wendaService;
-
-    @RequestMapping(path = {"/setting"}, method = {RequestMethod.GET})
-    @ResponseBody
-    public String setting(HttpSession httpSession) {
-        return "Setting OK. " + wendaService.getMessage(1);
-    }
-}
+//@Controller
+//public class SettingController {
+//    @Autowired
+//    WendaService wendaService;
+//
+//    @RequestMapping(path = {"/setting"}, method = {RequestMethod.GET})
+//    @ResponseBody
+//    public String setting() {
+//        return "Setting OK. " + wendaService.getMessage(1);
+//    }
+//}

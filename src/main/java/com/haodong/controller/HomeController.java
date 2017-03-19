@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by haodong on 2016/7/15.
+ * Created by haodong on 15.
  */
 @Controller
 public class HomeController {
