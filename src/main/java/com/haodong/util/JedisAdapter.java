@@ -2,7 +2,6 @@ package com.haodong.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.haodong.controller.CommentController;
 import com.haodong.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +13,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-
-/**
- * Created by haodong on 0.
- */
 @Service
 public class JedisAdapter implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
@@ -181,6 +176,7 @@ public class JedisAdapter implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         pool = new JedisPool("redis://localhost:6379/10");
+
     }
 
     public long sadd(String key, String value) {

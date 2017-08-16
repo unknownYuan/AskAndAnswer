@@ -1,8 +1,6 @@
 package com.haodong.model;
 
-/**
- * Created by haodong on 2016/6/26.
- */
+
 public class User {
     private int id;
     private String name;
@@ -13,6 +11,7 @@ public class User {
     public User() {
 
     }
+
     public User(String name) {
         this.name = name;
         this.password = "";

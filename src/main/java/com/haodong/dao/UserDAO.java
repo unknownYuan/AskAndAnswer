@@ -2,11 +2,13 @@ package com.haodong.dao;
 
 import com.haodong.model.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by haodong on 2.
  */
 @Mapper
+@Repository
 public interface UserDAO {
     String TABLE_NAME = "user";
     String INSET_FIELDS = " name, password, salt, head_url ";

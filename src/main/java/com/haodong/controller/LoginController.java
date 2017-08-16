@@ -18,9 +18,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-/**
- * Created by haodong on 2.
- */
 @Controller
 public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);

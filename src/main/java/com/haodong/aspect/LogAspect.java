@@ -10,22 +10,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * Created by haodong on .
- */
 @Aspect
 @Component
 public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    ///
-    //
-    public static void main(String[] args) {
-
-    }
     @Before("execution(* com.haodong.controller.*Controller.*(..))")
     public void beforeMethod(JoinPoint joinPoint) {
         StringBuilder sb = new StringBuilder();
+
         for (Object arg : joinPoint.getArgs()) {
             if (arg != null) {
                 sb.append("arg:" + arg.toString() + "|");

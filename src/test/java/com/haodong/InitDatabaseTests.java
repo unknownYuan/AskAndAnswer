@@ -21,7 +21,7 @@ import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WendaApplication.class)
-//@Sql("/init-schema.sql")
+@Sql("/init-schema.sql")
 public class InitDatabaseTests {
     @Autowired
     UserDAO userDAO;
@@ -44,7 +44,7 @@ public class InitDatabaseTests {
         jedisAdapter.getJedis().flushDB();
         for (int i = 0; i < 11; ++i) {
             User user = new User();
-            user.setHeadUrl(String.format("http://images.haodong.com/head/%dt.png", random.nextInt(1000)));
+            user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000)));
             user.setName(String.format("USER%d", i+1));
             user.setPassword("");
             user.setSalt("");

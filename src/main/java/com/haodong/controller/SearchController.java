@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by haodong
- */
 @Controller
 public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);

@@ -3,9 +3,6 @@ package com.haodong.async;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by haodong on 0.
- */
 public class EventModel {
     private EventType type;
     private int actorId;

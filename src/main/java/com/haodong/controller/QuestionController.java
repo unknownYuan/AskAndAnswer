@@ -18,9 +18,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by haodong on
- */
 @Controller
 public class QuestionController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);

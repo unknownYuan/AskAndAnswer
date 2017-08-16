@@ -6,9 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by haodong on 12.
- */
 @Service
 public class TimelineService {
 

@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-/**
- * Created by haodong on 2.
- */
 @Service
 public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
