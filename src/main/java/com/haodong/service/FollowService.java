@@ -14,9 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by haodong on 16/8/11.
- */
 @Service
 public class FollowService {
     @Autowired

@@ -8,15 +8,11 @@ import com.haodong.model.*;
 import com.haodong.service.*;
 import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyUtil;
-import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-/**
- * Created by haodong on 0.
- */
 @Component
 public class FeedHandler implements EventHandler {
     @Autowired
@@ -36,7 +32,7 @@ public class FeedHandler implements EventHandler {
 
 
     private String buildFeedData(EventModel model) {
-        Map<String, String> map = new HashMap<String ,String>();
+        Map<String, String> map = new HashMap<String, String>();
         // 触发用户是通用的
         User actor = userService.getUser(model.getActorId());
         if (actor == null) {
@@ -47,7 +43,7 @@ public class FeedHandler implements EventHandler {
         map.put("userName", actor.getName());
 
         if (model.getType() == EventType.COMMENT ||
-                (model.getType() == EventType.FOLLOW  && model.getEntityType() == EntityType.ENTITY_QUESTION)) {
+                (model.getType() == EventType.FOLLOW && model.getEntityType() == EntityType.ENTITY_QUESTION)) {
             Question question = questionService.getById(model.getEntityId());
             if (question == null) {
                 return null;
@@ -63,7 +59,7 @@ public class FeedHandler implements EventHandler {
     public void doHandle(EventModel model) {
         // 为了测试，把model的userId随机一下
         Random r = new Random();
-        model.setActorId(1+r.nextInt(10));
+        model.setActorId(1 + r.nextInt(10));
 
         // 构造一个新鲜事
         Feed feed = new Feed();

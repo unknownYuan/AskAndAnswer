@@ -5,21 +5,14 @@ import com.haodong.async.EventProducer;
 import com.haodong.async.EventType;
 import com.haodong.model.*;
 import com.haodong.service.*;
-import com.haodong.util.RedisKeyUtil;
 import com.haodong.util.WendaUtil;
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
 import java.util.*;
 
-/**
- * Created by haodong on 0.
- */
 @Controller
 public class FollowController {
     @Autowired
@@ -50,8 +43,10 @@ public class FollowController {
         boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId);
 
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
-                .setActorId(hostHolder.getUser().getId()).setEntityId(userId)
-                .setEntityType(EntityType.ENTITY_USER).setEntityOwnerId(userId));
+                .setActorId(hostHolder.getUser().getId())
+                .setEntityId(userId)
+                .setEntityType(EntityType.ENTITY_USER)
+                .setEntityOwnerId(userId));
 
         // 返回关注的人数
         return WendaUtil.getJSONString(ret ? 0 : 1, String.valueOf(followService.getFolloweeCount(hostHolder.getUser().getId(), EntityType.ENTITY_USER)));

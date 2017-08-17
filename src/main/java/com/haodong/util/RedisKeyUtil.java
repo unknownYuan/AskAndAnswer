@@ -1,17 +1,15 @@
 package com.haodong.util;
 
-/**
- * Created by haodong on 0.
- */
+
 public class RedisKeyUtil {
     private static String SPLIT = ":";
     private static String BIZ_LIKE = "LIKE";
     private static String BIZ_DISLIKE = "DISLIKE";
     private static String BIZ_EVENTQUEUE = "EVENT_QUEUE";
     // 获取粉丝
-    private static String BIZ_FOLLOWER = "FOLLOWER";
+    private static String BIZ_FOLLOWER = "FOLLOWER"; // 粉
     // 关注对象
-    private static String BIZ_FOLLOWEE = "FOLLOWEE";
+    private static String BIZ_FOLLOWEE = "FOLLOWEE"; // 关注人
     private static String BIZ_TIMELINE = "TIMELINE";
 
     public static String getLikeKey(int entityType, int entityId) {

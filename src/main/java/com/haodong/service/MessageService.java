@@ -2,15 +2,11 @@ package com.haodong.service;
 
 import com.haodong.dao.MessageDAO;
 import com.haodong.model.Message;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by haodong on 24.
- */
 @Service
 public class MessageService {
 

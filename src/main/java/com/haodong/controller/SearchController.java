@@ -1,11 +1,7 @@
 package com.haodong.controller;
 
-import com.haodong.async.EventModel;
-import com.haodong.async.EventProducer;
-import com.haodong.async.EventType;
 import com.haodong.model.*;
 import com.haodong.service.*;
-import com.haodong.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller

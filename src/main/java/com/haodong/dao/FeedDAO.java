@@ -2,10 +2,12 @@ package com.haodong.dao;
 
 import com.haodong.model.Feed;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface FeedDAO {
     String TABLE_NAME = " feed ";
     String INSERT_FIELDS = " user_id, data, created_date, type ";

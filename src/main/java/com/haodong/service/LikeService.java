@@ -5,9 +5,6 @@ import com.haodong.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by haodong on 0.
- */
 @Service
 public class LikeService {
     @Autowired
