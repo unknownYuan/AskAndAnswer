@@ -3,15 +3,11 @@ package com.haodong.service;
 import com.haodong.dao.QuestionDAO;
 import com.haodong.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
-/**
- * Created by haodong on 15.
- */
 @Service
 public class QuestionService {
     @Autowired

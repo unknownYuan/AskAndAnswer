@@ -7,9 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by haodong on 2.
- */
 @Mapper
 @Repository
 public interface QuestionDAO {

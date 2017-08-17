@@ -1,8 +1,5 @@
 package com.haodong.async;
 
-/**
- * Created by haodong on 0.
- */
 public enum EventType {
     LIKE(0),
     COMMENT(1),

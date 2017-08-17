@@ -1,11 +1,9 @@
 package com.haodong.controller;
 
-import com.haodong.async.EventHandler;
 import com.haodong.async.EventModel;
 import com.haodong.async.EventProducer;
 import com.haodong.async.EventType;
 import com.haodong.service.UserService;
-import com.haodong.util.WendaUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,12 +75,14 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
                 if (rememberme) {
-                    cookie.setMaxAge(3600*24*5);
+                    cookie.setMaxAge(3600*24*5);//set cookie exprie time is 5天
                 }
                 response.addCookie(cookie);
 
+
                 eventProducer.fireEvent(new EventModel(EventType.LOGIN)
-                        .setExt("username", username).setExt("email", "zjuyxy@qq.com")
+                        .setExt("username", username)
+                        .setExt("email", "1593028064@qq.com")
                         .setActorId((int)map.get("userId")));
 
                 if (StringUtils.isNotBlank(next)) {

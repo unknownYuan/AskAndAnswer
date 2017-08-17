@@ -16,15 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.View;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by haodong
- */
 @Controller
 public class MessageController {
     @Autowired
@@ -97,7 +93,6 @@ public class MessageController {
             message.setContent(content);
             messageService.addMessage(message);
             return WendaUtil.getJSONString(0);
-
         } catch (Exception e) {
             logger.error("发送消息失败" + e.getMessage());
             return WendaUtil.getJSONString(1, "发信失败");

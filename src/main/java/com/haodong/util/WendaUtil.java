@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.security.MessageDigest;
 import java.util.Map;
 
-/**
- * Created by haodong on .
- */
 public class WendaUtil {
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 

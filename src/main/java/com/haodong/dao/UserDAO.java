@@ -4,9 +4,6 @@ import com.haodong.model.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by haodong on 2.
- */
 @Mapper
 @Repository
 public interface UserDAO {

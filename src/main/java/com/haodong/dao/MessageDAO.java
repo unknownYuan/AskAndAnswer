@@ -1,15 +1,13 @@
 package com.haodong.dao;
 
-import com.haodong.model.Comment;
 import com.haodong.model.Message;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by haodong on 24.
- */
 @Mapper
+@Repository
 public interface MessageDAO {
     String TABLE_NAME = " message ";
     String INSERT_FIELDS = " from_id, to_id, content, has_read, conversation_id, created_date ";

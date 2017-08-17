@@ -2,11 +2,10 @@ package com.haodong.dao;
 
 import com.haodong.model.LoginTicket;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
-/**
- * Created by haodong on 2.
- */
 @Mapper
+@Repository
 public interface LoginTicketDAO {
     String TABLE_NAME = "login_ticket";
     String INSERT_FIELDS = " user_id, expired, status, ticket ";

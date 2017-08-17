@@ -1,14 +1,10 @@
 package com.haodong.dao;
 
-import com.haodong.model.Comment;
 import com.haodong.model.Feed;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-/**
- * Created by haodong on 2.
- */
 @Mapper
 public interface FeedDAO {
     String TABLE_NAME = " feed ";
