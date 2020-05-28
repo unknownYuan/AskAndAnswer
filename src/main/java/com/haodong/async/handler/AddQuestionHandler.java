@@ -24,12 +24,12 @@ public class AddQuestionHandler implements EventHandler {
 
     @Override
     public void doHandle(EventModel model) {
-        try {
-            searchService.indexQuestion(model.getEntityId(),
-                    model.getExt("title"), model.getExt("content"));
-        } catch (Exception e) {
-            logger.error("增加题目索引失败");
-        }
+//        try {
+//            searchService.indexQuestion(model.getEntityId(),
+//                    model.getExt("title"), model.getExt("content"));
+//        } catch (Exception e) {
+//            logger.error("增加题目索引失败");
+//        }
     }
 
     @Override

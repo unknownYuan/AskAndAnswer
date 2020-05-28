@@ -1,5 +1,6 @@
 package com.haodong.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.haodong.model.*;
 import com.haodong.service.CommentService;
 import com.haodong.service.FollowService;
@@ -47,6 +48,7 @@ public class HomeController {
             vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
             vo.set("user", userService.getUser(question.getUserId()));
             vos.add(vo);
+//            System.out.println(JSON.toJSONString("vo" +vo));
         }
         return vos;
     }

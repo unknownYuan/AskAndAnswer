@@ -1,5 +1,7 @@
 package com.haodong.model;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,5 +14,14 @@ public class ViewObject {
 
     public Object get(String key) {
         return objs.get(key);
+    }
+
+
+    public Map<String, Object> getObjs() {
+        return objs;
+    }
+
+    public void setObjs(Map<String, Object> objs) {
+        this.objs = objs;
     }
 }
