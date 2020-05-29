@@ -27,4 +27,6 @@ public interface QuestionDAO {
     @Update({"update ", TABLE_NAME, " set comment_count = #{commentCount} where id=#{id}"})
     int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
 
+
+    List<Question> selectQuestionByKeyWords(String keyword, int offset, int count);
 }

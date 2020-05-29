@@ -1,11 +1,13 @@
 package com.haodong.service;
 
+import com.haodong.dao.QuestionDAO;
 import com.haodong.model.Question;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
@@ -19,6 +21,10 @@ public class SearchService {
     private static final String QUESTION_TITLE_FIELD = "question_title";
     private static final String QUESTION_CONTENT_FIELD = "question_content";
 
+    @Autowired
+    QuestionDAO questionDAO;
+
+    @Deprecated
     public List<Question> searchQuestion(String keyword, int offset, int count,
                                          String hlPre, String hlPos) throws Exception {
         List<Question> questionList = new ArrayList<>();
@@ -57,5 +63,16 @@ public class SearchService {
         doc.setField(QUESTION_CONTENT_FIELD, content);
         UpdateResponse response = client.add(doc, 1000);
         return response != null && response.getStatus() == 0;
+    }
+
+    /**
+     * 直接从mysql中搜索
+     * @param keyword
+     * @param offset
+     * @param count
+     * @return
+     */
+    public List<Question> searchQuestionV2(String keyword, int offset, int count) {
+        return questionDAO.selectQuestionByKeyWords(keyword, offset, count);
     }
 }

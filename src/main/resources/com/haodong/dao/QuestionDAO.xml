@@ -17,4 +17,13 @@
         ORDER BY id DESC
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="selectQuestionByKeyWords" resultType="com.haodong.model.Question">
+        select
+        <include refid="selectFields"/>
+        from
+        <include refid="table"/>
+        where content like %#{keyword}%
+        limit #{offset}, #{limit}
+    </select>
 </mapper>
