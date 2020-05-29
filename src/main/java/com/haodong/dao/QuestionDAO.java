@@ -28,5 +28,5 @@ public interface QuestionDAO {
     int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
 
 
-    List<Question> selectQuestionByKeyWords(String keyword, int offset, int count);
+    List<Question> selectQuestionByKeyWords(@Param("keyword") String keyword,@Param("offset") int offset,@Param("limit") int count);
 }

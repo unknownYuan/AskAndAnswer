@@ -23,7 +23,7 @@
         <include refid="selectFields"/>
         from
         <include refid="table"/>
-        where content like %#{keyword}%
+        where content like concat('%', #{keyword}, '%')
         limit #{offset}, #{limit}
     </select>
 </mapper>
