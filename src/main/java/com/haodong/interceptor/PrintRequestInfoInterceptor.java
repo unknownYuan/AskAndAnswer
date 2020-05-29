@@ -1,5 +1,6 @@
 package com.haodong.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import com.haodong.util.JsonSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -23,7 +24,7 @@ public class PrintRequestInfoInterceptor implements HandlerInterceptor {
         sb.append(JsonSerializer.serialize(httpServletRequest.getParameterMap()));
         sb.append("} " + httpServletRequest.getRequestURI() + "\n");
         if(modelAndView != null) {
-            sb.append("response " + JsonSerializer.serialize(modelAndView));
+            sb.append("response " + JSON.toJSONString(modelAndView));
         }
         System.out.println(sb.toString());
     }
