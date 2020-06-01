@@ -70,3 +70,11 @@ CREATE TABLE `question` (
     INDEX `user_index` (`user_id` ASC))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
+
+drop table if exists `log_record`;
+create table `log_record`(
+`id` int not null auto_increment,
+`biz_id` int null,
+PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+   DEFAULT CHARACTER SET = utf8;

@@ -16,16 +16,23 @@ public class QuestionService {
     @Autowired
     SensitiveService sensitiveService;
 
+    @Autowired
+    LogService logService;
+
     public Question getById(int id) {
         return questionDAO.getById(id);
     }
 
-    public int addQuestion(Question question) {
+    public int addQuestion(Question question) throws Exception {
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
         // 敏感词过滤
         question.setTitle(sensitiveService.filter(question.getTitle()));
         question.setContent(sensitiveService.filter(question.getContent()));
+        int result = logService.record(question.getId());
+        if(result != 1){
+            throw new Exception("");
+        }
         return questionDAO.addQuestion(question) > 0 ? question.getId() : 0;
     }
 
@@ -34,6 +41,8 @@ public class QuestionService {
     }
 
     public int updateCommentCount(int id, int count) {
+
+
         return questionDAO.updateCommentCount(id, count);
     }
 }
