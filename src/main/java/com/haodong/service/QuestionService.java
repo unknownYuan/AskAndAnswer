@@ -4,6 +4,7 @@ import com.haodong.dao.QuestionDAO;
 import com.haodong.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class QuestionService {
         return questionDAO.getById(id);
     }
 
+    @Transactional
     public int addQuestion(Question question) throws Exception {
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
