@@ -1,16 +1,13 @@
 package com.haodong.interceptor;
 
-//import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.haodong.util.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.function.BiConsumer;
 
 @Component
 public class PrintRequestInfoInterceptor implements HandlerInterceptor {
