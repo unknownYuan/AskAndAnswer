@@ -1,7 +1,9 @@
 package com.haodong.interceptor;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.haodong.util.JsonSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -12,6 +14,10 @@ import java.util.function.BiConsumer;
 
 @Component
 public class PrintRequestInfoInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    Gson gson;
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         return true;
@@ -24,7 +30,7 @@ public class PrintRequestInfoInterceptor implements HandlerInterceptor {
         sb.append(JsonSerializer.serialize(httpServletRequest.getParameterMap()));
         sb.append("} " + httpServletRequest.getRequestURI() + "\n");
         if(modelAndView != null) {
-            sb.append("response " + JSON.toJSONString(modelAndView));
+            sb.append("response " + gson.toJson(modelAndView));
         }
         System.out.println(sb.toString());
     }
