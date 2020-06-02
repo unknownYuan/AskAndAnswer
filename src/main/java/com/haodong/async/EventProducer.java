@@ -1,6 +1,8 @@
 package com.haodong.async;
 
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.haodong.controller.LoginController;
 import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyUtil;
@@ -15,10 +17,12 @@ public class EventProducer {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     JedisAdapter jedisAdapter;
+    @Autowired
+    Gson gson;
 
     public boolean fireEvent(EventModel eventModel) {
         try {
-            String json = JSONObject.toJSONString(eventModel);
+            String json = gson.toJson(eventModel);
             String key = RedisKeyUtil.getEventQueueKey();
             jedisAdapter.lpush(key, json);
             return true;

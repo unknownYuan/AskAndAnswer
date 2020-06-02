@@ -1,6 +1,7 @@
 package com.haodong.async;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyUtil;
 import org.slf4j.Logger;
@@ -24,6 +25,8 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
 
     @Autowired
     JedisAdapter jedisAdapter;
+    @Autowired
+    Gson gson;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -53,7 +56,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                             continue;
                         }
 
-                        EventModel eventModel = JSON.parseObject(message, EventModel.class);
+                        EventModel eventModel = gson.fromJson(message, EventModel.class);
                         if (!config.containsKey(eventModel.getType())) {
                             logger.error("不能识别的事件");
                             continue;

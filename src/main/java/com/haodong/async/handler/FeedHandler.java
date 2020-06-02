@@ -1,6 +1,7 @@
 package com.haodong.async.handler;
 
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.haodong.async.EventHandler;
 import com.haodong.async.EventModel;
 import com.haodong.async.EventType;
@@ -29,6 +30,8 @@ public class FeedHandler implements EventHandler {
 
     @Autowired
     QuestionService questionService;
+    @Autowired
+    Gson gson;
 
 
     private String buildFeedData(EventModel model) {
@@ -50,7 +53,7 @@ public class FeedHandler implements EventHandler {
             }
             map.put("questionId", String.valueOf(question.getId()));
             map.put("questionTitle", question.getTitle());
-            return JSONObject.toJSONString(map);
+            return gson.toJson(map);
         }
         return null;
     }

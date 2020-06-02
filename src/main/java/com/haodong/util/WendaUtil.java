@@ -1,38 +1,46 @@
 package com.haodong.util;
 
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.util.Map;
 
+@Component
 public class WendaUtil {
+    @Autowired
+    static Gson gson;
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static int ANONYMOUS_USERID = 3;
     public static int SYSTEM_USERID = 4;
 
     public static String getJSONString(int code) {
-        JSONObject json = new JSONObject();
-        json.put("code", code);
-        return json.toJSONString();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code", code);
+        return jsonObject.getAsString();
     }
 
     public static String getJSONString(int code, String msg) {
-        JSONObject json = new JSONObject();
-        json.put("code", code);
-        json.put("msg", msg);
-        return json.toJSONString();
+        JsonObject json = new JsonObject();
+        json.addProperty("code", String.valueOf(code));
+        json.addProperty("msg", msg);
+        return json.getAsString();
     }
 
     public static String getJSONString(int code, Map<String, Object> map) {
-        JSONObject json = new JSONObject();
-        json.put("code", code);
+        JsonObject json = new JsonObject();
+        json.addProperty("code", code);
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            json.put(entry.getKey(), entry.getValue());
+            json.addProperty(entry.getKey(), gson.toJson(entry.getValue()));
         }
-        return json.toJSONString();
+        return json.getAsString();
     }
 
     public static String MD5(String key) {

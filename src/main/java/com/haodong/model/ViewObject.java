@@ -1,6 +1,6 @@
 package com.haodong.model;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
 
 import java.util.HashMap;
 import java.util.Map;

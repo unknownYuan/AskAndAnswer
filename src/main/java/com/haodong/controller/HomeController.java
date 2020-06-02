@@ -1,6 +1,6 @@
 package com.haodong.controller;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
 import com.haodong.model.*;
 import com.haodong.service.CommentService;
 import com.haodong.service.FollowService;
