@@ -4,10 +4,13 @@ import com.haodong.dao.QuestionDAO;
 import com.haodong.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class QuestionService {
@@ -20,22 +23,35 @@ public class QuestionService {
     @Autowired
     LogService logService;
 
+    @Autowired
+    private PlatformTransactionManager ptm;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("tm="+ptm);
+    }
+
+
     public Question getById(int id) {
         return questionDAO.getById(id);
     }
 
     @Transactional
-    public int addQuestion(Question question) throws Exception {
+    public int addQuestion(Question question) {
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
         // 敏感词过滤
         question.setTitle(sensitiveService.filter(question.getTitle()));
         question.setContent(sensitiveService.filter(question.getContent()));
         int result = logService.record(question.getId());
-        if(result != 1){
-            throw new Exception("");
+        int success =  questionDAO.addQuestion(question) > 0 ? question.getId() : 0;
+        boolean random = new Random().nextBoolean();
+        System.out.println("boolean = " + random);
+        if(random){
+            System.out.println("random false;");
+            throw new RuntimeException("run time exception!");
         }
-        return questionDAO.addQuestion(question) > 0 ? question.getId() : 0;
+        return result & success;
     }
 
     public List<Question> getLatestQuestions(int userId, int offset, int limit) {
