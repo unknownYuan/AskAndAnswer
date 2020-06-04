@@ -24,6 +24,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class WendaApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(WendaApplication.class, args);
-
+        int count = context.getBeanDefinitionCount();
+        System.out.println("beans count = " + count);
+        for (String name:
+             context.getBeanDefinitionNames()) {
+            System.out.println(name);
+        }
+        System.out.println("finished");
     }
 }
