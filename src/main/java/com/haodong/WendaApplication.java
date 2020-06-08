@@ -7,6 +7,8 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.net.ServerSocket;
+
 //@SpringBootApplication
 //public class WendaApplication extends SpringBootServletInitializer {
 //    @Override
@@ -31,5 +33,10 @@ public class WendaApplication {
             System.out.println(name);
         }
         System.out.println("finished");
+    }
+
+    public static void mainx(String[] args) {
+//        ServerSocket socket = new ServerSocket();
+//        socket.accept();
     }
 }
