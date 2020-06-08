@@ -1,17 +1,24 @@
 package com.haodong;
 
+import com.haodong.service.IThreadExcutor;
 import com.haodong.service.LikeService;
+import com.haodong.util.CountDownLatchExcutor;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WendaApplication.class)
 public class LikeServiceTests {
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    CountDownLatchExcutor countDownLatchExcutor;
 
     @Before
     public void setUp() {
@@ -36,11 +43,27 @@ public class LikeServiceTests {
     @Test
     public void testLike() {
         System.out.println("testLike");
-        likeService.like(123, 1, 1);
-        Assert.assertEquals(1, likeService.getLikeStatus(123, 1, 1));
+        System.out.println(likeService.getLikeCount(1,1));
 
-        likeService.disLike(123, 1, 1);
-        Assert.assertEquals(-1, likeService.getLikeStatus(123, 1, 1));
+
+        AtomicInteger userId = new AtomicInteger(10000);
+
+
+        countDownLatchExcutor.run(new IThreadExcutor() {
+            @Override
+            public void excutor() {
+                likeService.like(userId.getAndIncrement(), 1, 1);
+            }
+        }, 200 ,5000);
+
+        System.out.println(likeService.getLikeCount(1,1));
+
+
+
+//        Assert.assertEquals(1, likeService.getLikeStatus(123, 1, 1));
+
+//        likeService.disLike(123, 1, 1);
+//        Assert.assertEquals(-1, likeService.getLikeStatus(123, 1, 1));
     }
 
     @Test
