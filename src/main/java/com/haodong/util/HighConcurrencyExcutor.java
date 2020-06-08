@@ -19,7 +19,7 @@ public class HighConcurrencyExcutor {
      * @param excutor
      */
     public void run(IExcutor excutor, int threadTotal, int clientTotal){
-        ExecutorService executorService = Executors.newFixedThreadPool(1500);
+        ExecutorService executorService = Executors.newFixedThreadPool(1900);
 
         //信号量，此处用于控制并发的线程数
         final Semaphore semaphore = new Semaphore(threadTotal);

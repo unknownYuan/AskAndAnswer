@@ -34,7 +34,7 @@ public class QuestionServiceTests {
      * 高并发插入question
      */
     @Test
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void insertQuestion() {
         AtomicInteger successCount = new AtomicInteger(0);
         highConcurrencyExcutor.run(new IExcutor() {
@@ -53,7 +53,7 @@ public class QuestionServiceTests {
                 }
 
             }
-        }, 200, 5000);
+        }, 1900, 7600);
 
     }
 

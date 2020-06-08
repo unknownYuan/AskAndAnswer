@@ -46,7 +46,7 @@ public class QuestionService {
         int result = logService.record(question.getId());
         int success =  questionDAO.addQuestion(question) > 0 ? question.getId() : 0;
         System.out.println("test success = " + success + "  result =" +result);
-        return result & success;
+        return success;
     }
 
     public List<Question> getLatestQuestions(int userId, int offset, int limit) {
