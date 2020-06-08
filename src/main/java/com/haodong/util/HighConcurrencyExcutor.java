@@ -1,6 +1,6 @@
 package com.haodong.util;
 
-import com.haodong.service.IThreadExcutor;
+import com.haodong.service.IExcutor;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
@@ -12,14 +12,15 @@ import java.util.concurrent.Semaphore;
  * 模拟高并发请求
  */
 @Component
-public class CountDownLatchExcutor {
+public class HighConcurrencyExcutor {
 
     /**
      *
      * @param excutor
      */
-    public void run(IThreadExcutor excutor, int threadTotal, int clientTotal){
-        ExecutorService executorService = Executors.newCachedThreadPool();
+    public void run(IExcutor excutor, int threadTotal, int clientTotal){
+        ExecutorService executorService = Executors.newFixedThreadPool(1500);
+
         //信号量，此处用于控制并发的线程数
         final Semaphore semaphore = new Semaphore(threadTotal);
         //闭锁，可实现计数器递减

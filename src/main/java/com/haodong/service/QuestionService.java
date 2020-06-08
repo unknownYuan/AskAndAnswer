@@ -45,12 +45,6 @@ public class QuestionService {
         question.setContent(sensitiveService.filter(question.getContent()));
         int result = logService.record(question.getId());
         int success =  questionDAO.addQuestion(question) > 0 ? question.getId() : 0;
-        boolean random = new Random().nextBoolean();
-        System.out.println("boolean = " + random);
-        if(random){
-            System.out.println("random false;");
-            throw new RuntimeException("run time exception!");
-        }
         return result & success;
     }
 

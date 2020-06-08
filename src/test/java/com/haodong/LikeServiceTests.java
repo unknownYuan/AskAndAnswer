@@ -1,8 +1,8 @@
 package com.haodong;
 
-import com.haodong.service.IThreadExcutor;
+import com.haodong.service.IExcutor;
 import com.haodong.service.LikeService;
-import com.haodong.util.CountDownLatchExcutor;
+import com.haodong.util.HighConcurrencyExcutor;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class LikeServiceTests {
     LikeService likeService;
 
     @Autowired
-    CountDownLatchExcutor countDownLatchExcutor;
+    HighConcurrencyExcutor highConcurrencyExcutor;
 
     @Before
     public void setUp() {
@@ -55,7 +55,7 @@ public class LikeServiceTests {
 
         AtomicInteger userId = new AtomicInteger(10000);
 
-        countDownLatchExcutor.run(new IThreadExcutor() {
+        highConcurrencyExcutor.run(new IExcutor() {
             @Override
             public void excutor() {
                 likeService.like(userId.getAndIncrement(), type, id);
