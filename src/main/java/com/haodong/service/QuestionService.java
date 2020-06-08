@@ -45,6 +45,7 @@ public class QuestionService {
         question.setContent(sensitiveService.filter(question.getContent()));
         int result = logService.record(question.getId());
         int success =  questionDAO.addQuestion(question) > 0 ? question.getId() : 0;
+        System.out.println("test success = " + success + "  result =" +result);
         return result & success;
     }
 
@@ -53,7 +54,6 @@ public class QuestionService {
     }
 
     public int updateCommentCount(int id, int count) {
-
 
         return questionDAO.updateCommentCount(id, count);
     }

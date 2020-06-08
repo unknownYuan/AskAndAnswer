@@ -8,10 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 这个接口测试高并发往mysql中同时插入帖子
@@ -32,7 +34,9 @@ public class QuestionServiceTests {
      * 高并发插入question
      */
     @Test
-    public void insertQuestion(){
+    @Rollback(value = false)
+    public void insertQuestion() {
+        AtomicInteger successCount = new AtomicInteger(0);
         highConcurrencyExcutor.run(new IExcutor() {
             @Override
             public void excutor() {
@@ -42,9 +46,14 @@ public class QuestionServiceTests {
                 question.setUserId(random.nextInt(100));
                 question.setCreatedDate(new Date());
                 question.setCommentCount(10000);
-                questionService.addQuestion(question);
+                int success = questionService.addQuestion(question);
+                if (success > 0) {
+                    successCount.incrementAndGet();
+                    System.out.println(successCount.get());
+                }
+
             }
-        }, 100, 5000);
+        }, 200, 5000);
 
     }
 
