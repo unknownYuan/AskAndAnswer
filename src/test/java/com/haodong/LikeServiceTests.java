@@ -46,8 +46,7 @@ public class LikeServiceTests {
         System.out.println(likeService.getLikeCount(1,1));
 
 
-        AtomicInteger userId = new AtomicInteger(10000);
-
+        AtomicInteger userId = new AtomicInteger(70000);
 
         countDownLatchExcutor.run(new IThreadExcutor() {
             @Override
@@ -57,13 +56,6 @@ public class LikeServiceTests {
         }, 200 ,5000);
 
         System.out.println(likeService.getLikeCount(1,1));
-
-
-
-//        Assert.assertEquals(1, likeService.getLikeStatus(123, 1, 1));
-
-//        likeService.disLike(123, 1, 1);
-//        Assert.assertEquals(-1, likeService.getLikeStatus(123, 1, 1));
     }
 
     @Test
