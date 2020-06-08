@@ -11,6 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * 这个class的作用是测试高并发点赞,1000个线程同时点赞，结果是正确的，原因：redis的sadd
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WendaApplication.class)
 public class LikeServiceTests {
@@ -43,19 +47,22 @@ public class LikeServiceTests {
     @Test
     public void testLike() {
         System.out.println("testLike");
-        System.out.println(likeService.getLikeCount(1,1));
+        final int type = 1;
+        final int id = 4;
+
+        System.out.println(likeService.getLikeCount(type,id));
 
 
-        AtomicInteger userId = new AtomicInteger(70000);
+        AtomicInteger userId = new AtomicInteger(10000);
 
         countDownLatchExcutor.run(new IThreadExcutor() {
             @Override
             public void excutor() {
-                likeService.like(userId.getAndIncrement(), 1, 1);
+                likeService.like(userId.getAndIncrement(), type, id);
             }
-        }, 200 ,5000);
+        }, 1000 ,5000);
 
-        System.out.println(likeService.getLikeCount(1,1));
+        System.out.println(likeService.getLikeCount(type,id));
     }
 
     @Test
