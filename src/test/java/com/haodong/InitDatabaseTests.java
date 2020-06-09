@@ -12,7 +12,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+//import org.springframework.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,7 +21,8 @@ import java.util.Date;
 import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = WendaApplication.class)
+//@SpringApplicationConfiguration(classes = WendaApplication.class)
+@SpringBootTest
 @Sql("/init-schema.sql")
 public class InitDatabaseTests {
     @Autowired
@@ -71,6 +73,12 @@ public class InitDatabaseTests {
         Assert.assertEquals("newpassword", userDAO.selectById(1).getPassword());
         //userDAO.deleteById(1);
         //Assert.assertNull(userDAO.selectById(1));
+    }
+
+    @Test
+    public void testBoot(){
+        System.out.println("boot!");
+        questionDAO.getClass();
     }
 
     /*

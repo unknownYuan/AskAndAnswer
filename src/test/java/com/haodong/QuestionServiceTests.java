@@ -7,7 +7,8 @@ import com.haodong.util.HighConcurrencyExcutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+//import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,7 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 这个接口测试高并发往mysql中同时插入帖子
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = WendaApplication.class)
+//@SpringApplicationConfiguration(classes = WendaApplication.class)
+@SpringBootTest
 public class QuestionServiceTests {
 
     @Autowired
@@ -55,7 +57,7 @@ public class QuestionServiceTests {
                 }
 
             }
-        }, 1900, 190000);
+        }, 1900, 1900);
         long end = System.currentTimeMillis();
         System.out.println("time = " + (end - start));
 

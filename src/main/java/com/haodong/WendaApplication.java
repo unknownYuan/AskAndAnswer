@@ -3,7 +3,7 @@ package com.haodong;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+//import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -31,7 +31,7 @@ public class WendaApplication {
         for (String name:
              context.getBeanDefinitionNames()) {
             System.out.println(name);
-            if(name.equals("dataSource")){
+            if(name.equals("druid")){
                 System.out.println(context.getBean(name).getClass());
             }
         }
