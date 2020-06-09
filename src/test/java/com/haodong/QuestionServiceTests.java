@@ -37,6 +37,8 @@ public class QuestionServiceTests {
 //    @Rollback(value = false)
     public void insertQuestion() {
         AtomicInteger successCount = new AtomicInteger(0);
+
+        long start = System.currentTimeMillis();
         highConcurrencyExcutor.run(new IExcutor() {
             @Override
             public void excutor() {
@@ -53,7 +55,9 @@ public class QuestionServiceTests {
                 }
 
             }
-        }, 1900, 7600);
+        }, 1900, 19000);
+        long end = System.currentTimeMillis();
+        System.out.println("time = " + (end - start));
 
     }
 
