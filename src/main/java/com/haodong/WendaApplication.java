@@ -31,6 +31,9 @@ public class WendaApplication {
         for (String name:
              context.getBeanDefinitionNames()) {
             System.out.println(name);
+            if(name.equals("dataSource")){
+                System.out.println(context.getBean(name).getClass());
+            }
         }
         System.out.println("finished");
     }

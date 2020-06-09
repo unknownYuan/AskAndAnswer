@@ -55,7 +55,7 @@ public class QuestionServiceTests {
                 }
 
             }
-        }, 1900, 19000);
+        }, 1900, 190000);
         long end = System.currentTimeMillis();
         System.out.println("time = " + (end - start));
 
