@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.time.DateFormatUtils;
+//import org.apache.commons.lang.time.DateFormatUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -142,7 +142,7 @@ public final class JsonSerializer {
             // String-like Primitives
             appendString(buf, value.toString());
         } else if (value instanceof Date) {
-            appendString(buf, DateFormatUtils.format(((Date)value), Constants.TIME_PATTERN));
+//            appendString(buf, DateFormatUtils.format(((Date)value), Constants.TIME_PATTERN));
 //		} else if (value instanceof JSONObject) {
 //			appendJsonObject(buf, (JSONObject) value);
 //		} else if (value instanceof JSONArray) {
