@@ -1,5 +1,6 @@
 package com.haodong;
 
+//import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,17 +24,20 @@ import java.net.ServerSocket;
 
 @SpringBootApplication
 //@EnableTransactionManagement
+//@EnableAdminServer
 public class WendaApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(WendaApplication.class, args);
         int count = context.getBeanDefinitionCount();
         System.out.println("beans count = " + count);
+        int i = 1;
         for (String name:
              context.getBeanDefinitionNames()) {
-            System.out.println(name);
-            if(name.equals("druid")){
-                System.out.println(context.getBean(name).getClass());
-            }
+            System.out.println(i + " " + name +" " +  context.getBean(name).getClass());
+//            if(name.equals("druid")){
+//                System.out.println();
+//            }
+            i++;
         }
         System.out.println("finished");
     }
