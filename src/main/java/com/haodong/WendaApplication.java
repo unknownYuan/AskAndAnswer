@@ -1,7 +1,7 @@
 package com.haodong;
 
 //import de.codecentric.boot.admin.server.config.EnableAdminServer;
-import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
+//import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -26,7 +26,7 @@ import java.net.ServerSocket;
 @SpringBootApplication
 //@EnableTransactionManagement
 //@EnableAdminServer
-@NacosPropertySource(dataId = "wenda.service", autoRefreshed = true)
+//@NacosPropertySource(dataId = "wenda.service", autoRefreshed = true)
 public class WendaApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(WendaApplication.class, args);
