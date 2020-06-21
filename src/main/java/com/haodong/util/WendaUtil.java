@@ -24,9 +24,11 @@ public class WendaUtil {
     public static int SYSTEM_USERID = 4;
 
     public static String getJSONString(int code) {
+        Gson gson = new Gson();
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("code", code);
-        return jsonObject.getAsString();
+        return gson.toJson(jsonObject);
     }
 
     public static String getJSONString(int code, String msg) {
