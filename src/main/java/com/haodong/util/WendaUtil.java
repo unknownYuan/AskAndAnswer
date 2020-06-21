@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
 public class WendaUtil {
-    @Autowired
-    static Gson gson;
+//    @Autowired
+//    Gson gson;
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static int ANONYMOUS_USERID = 3;
@@ -28,17 +30,22 @@ public class WendaUtil {
     }
 
     public static String getJSONString(int code, String msg) {
-        JsonObject json = new JsonObject();
-        json.addProperty("code", String.valueOf(code));
-        json.addProperty("msg", msg);
-        return json.getAsString();
+        Map<String, String> map = new LinkedHashMap<>();
+        Gson gson = new Gson();
+        map.put("code", String.valueOf(code));
+        map.put("msg", msg);
+        return gson.toJson(map);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getJSONString(100, "test"));
     }
 
     public static String getJSONString(int code, Map<String, Object> map) {
         JsonObject json = new JsonObject();
         json.addProperty("code", code);
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            json.addProperty(entry.getKey(), gson.toJson(entry.getValue()));
+            json.addProperty(entry.getKey(), new Gson().toJson(entry.getValue()));
         }
         return json.getAsString();
     }

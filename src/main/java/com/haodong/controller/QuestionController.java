@@ -112,6 +112,7 @@ public class QuestionController {
             }
         } catch (Exception e) {
             logger.error("增加题目失败" + e.getMessage());
+            e.printStackTrace();
         }
         return WendaUtil.getJSONString(1, "失败");
     }
