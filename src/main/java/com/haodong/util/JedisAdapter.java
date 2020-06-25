@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-@Service
+//@Service
 public class JedisAdapter implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
