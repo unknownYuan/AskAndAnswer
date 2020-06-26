@@ -31,16 +31,12 @@ public class FollowService {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
         Date date = new Date();
         // 实体的粉丝增加当前用户
-//        Jedis jedis = redisssionCluster.getJedis();
-//        Transaction tx = redisssionCluster.multi(jedis);
         RTransaction tx = redisssionCluster.getTransaction();
-//        tx.getSet()
         redisssionCluster.zadd(tx, followerKey, date.getTime(), String.valueOf(userId));
         // 当前用户对这类实体关注+1
         redisssionCluster.zadd(tx, followeeKey, date.getTime(), String.valueOf(entityId));
         redisssionCluster.commit(tx);
         return true;
-//        return ret.size() == 2 && (Long) ret.get(0) > 0 && (Long) ret.get(1) > 0;
     }
 
     /**
@@ -54,15 +50,12 @@ public class FollowService {
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
         Date date = new Date();
-//        Jedis jedis = redisssionCluster.getJedis();
         RTransaction tx = redisssionCluster.getTransaction();
         // 实体的粉丝增加当前用户
         redisssionCluster.zrem(tx, followerKey, String.valueOf(userId));
         // 当前用户对这类实体关注-1
         redisssionCluster.zrem(tx, followeeKey, String.valueOf(entityId));
-//        List<Object> ret = redisssionCluster.exec(tx, jedis);
         redisssionCluster.commit(tx);
-//        return ret.size() == 2 && (Long) ret.get(0) > 0 && (Long) ret.get(1) > 0;
         return true;
     }
 
