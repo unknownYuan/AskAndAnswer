@@ -23,10 +23,11 @@ import java.net.ServerSocket;
 //    }
 //}
 
-@SpringBootApplication
+
 //@EnableTransactionManagement
 //@EnableAdminServer
 //@NacosPropertySource(dataId = "wenda.service", autoRefreshed = true)
+@SpringBootApplication
 public class WendaApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(WendaApplication.class, args);

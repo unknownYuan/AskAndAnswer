@@ -4,7 +4,7 @@ import com.haodong.model.*;
 import com.haodong.service.*;
 //import com.haodong.util.;
 import com.haodong.util.RedisKeyUtil;
-import com.haodong.util.RedisssionCluster;
+import com.haodong.util.RedissionCluster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ public class FeedController {
     HostHolder hostHolder;
 
     @Autowired
-    RedisssionCluster redisssionCluster;
+    RedissionCluster redissionCluster;
 
     @RequestMapping(path = {"/pushfeeds"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getPushFeeds(Model model) {
         int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0;
-        List<String> feedIds = redisssionCluster.lrange(RedisKeyUtil.getTimelineKey(localUserId), 0, 10);
+        List<String> feedIds = redissionCluster.lrange(RedisKeyUtil.getTimelineKey(localUserId), 0, 10);
         List<Feed> feeds = new ArrayList<Feed>();
         for (String feedId : feedIds) {
             Feed feed = feedService.getById(Integer.parseInt(feedId));

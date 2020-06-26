@@ -7,7 +7,7 @@ import com.haodong.async.EventType;
 import com.haodong.model.*;
 import com.haodong.service.*;
 import com.haodong.util.RedisKeyUtil;
-import com.haodong.util.RedisssionCluster;
+import com.haodong.util.RedissionCluster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class FeedHandler implements EventHandler {
     FeedService feedService;
 
     @Autowired
-    RedisssionCluster redisssionCluster;
+    RedissionCluster redissionCluster;
 
     @Autowired
     QuestionService questionService;
@@ -82,7 +82,7 @@ public class FeedHandler implements EventHandler {
         // 给所有粉丝推事件
         for (int follower : followers) {
             String timelineKey = RedisKeyUtil.getTimelineKey(follower);
-            redisssionCluster.lpush(timelineKey, String.valueOf(feed.getId()));
+            redissionCluster.lpush(timelineKey, String.valueOf(feed.getId()));
             // 限制最长长度，如果timelineKey的长度过大，就删除后面的新鲜事
         }
     }

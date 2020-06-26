@@ -16,9 +16,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class RedisssionCluster {
+public class RedissionCluster {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisssionCluster.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedissionCluster.class);
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -56,6 +56,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForSet().size(key);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return 0;
     }
@@ -67,17 +68,23 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
 
     public List<String> brpop(int timeout, String key) {
+        List<String> resultList = new ArrayList<>();
         try {
-            stringRedisTemplate.opsForList().rightPop(key, timeout, TimeUnit.SECONDS);
+
+            if(stringRedisTemplate.opsForList().size(key) > 0) {
+                resultList.add(stringRedisTemplate.opsForList().rightPop(key, timeout, TimeUnit.SECONDS));
+            }
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
-        return new ArrayList<String>();
+        return resultList;
     }
 
     public long lpush(String key, String value) {
@@ -85,6 +92,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForList().leftPush(key, value);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return 0;
     }
@@ -104,6 +112,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForZSet().add(key, value, score);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
@@ -113,6 +122,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForZSet().remove(key, value);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return 0;
     }
@@ -123,6 +133,7 @@ public class RedisssionCluster {
             return transaction;
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -137,6 +148,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForZSet().range(key, start, end);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return new HashSet<>();
     }
@@ -146,6 +158,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForZSet().reverseRange(key, start, end);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -155,6 +168,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForZSet().size(key);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return 0;
     }
@@ -164,6 +178,7 @@ public class RedisssionCluster {
             return stringRedisTemplate.opsForZSet().score(key, member);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

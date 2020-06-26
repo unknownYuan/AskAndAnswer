@@ -8,7 +8,7 @@ import com.haodong.model.User;
 import com.haodong.service.FollowService;
 import com.haodong.service.SensitiveService;
 //import com.haodong.util.redisssionCluster;
-import com.haodong.util.RedisssionCluster;
+import com.haodong.util.RedissionCluster;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ public class InitDatabaseTests {
     FollowService followService;
 
     @Autowired
-    RedisssionCluster redisssionCluster;
+    RedissionCluster redissionCluster;
 
     @Test
     public void contextLoads() {

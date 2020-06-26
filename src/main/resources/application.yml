@@ -1,0 +1,61 @@
+logging:
+  file: /Users/welove/jackguo-work/logs/wenda_stdout.log
+  level:
+    com:
+      haodong:
+        dao: debug
+    org:
+      springframework:
+        jdbc:
+          datasource: debug
+mybatis:
+  config-location: classpath:mybatis-config.xml
+nacos:
+  config:
+    server-addr: 127.0.0.1:8848
+  discovery:
+    server-addr: 127.0.0.1:8848
+spring:
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    filters: stat,wall,log4j
+    initialSize: 20
+    maxActive: 140
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 20
+    password: mysql
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/wenda?useUnicode=true&characterEncoding=utf8&useSSL=false
+    useGlobalDataSourceStat: true
+    username: root
+    validationQuery: SELECT 1 FROM DUAL
+  freemarker:
+    suffix: .html
+  velocity:
+    toolbox-config-location: toolbox.xml
+
+
+  redis:
+    cluster:
+      timeout: 6000ms
+      max-redirects: 3  # 获取失败 最大重定向次数
+      nodes:
+        - 127.0.0.1:7001
+        - 127.0.0.1:7002
+        - 127.0.0.1:7003
+        - 127.0.0.1:7004
+        - 127.0.0.1:7005
+        - 127.0.0.1:7006
+    lettuce:
+      pool:
+        max-active: 1000  #连接池最大连接数（使用负值表示没有限制）
+        max-idle: 10 # 连接池中的最大空闲连接
+        min-idle: 5 # 连接池中的最小空闲连接
+        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）

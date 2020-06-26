@@ -3,7 +3,8 @@ package com.haodong.async;
 
 import com.google.gson.Gson;
 import com.haodong.util.RedisKeyUtil;
-import com.haodong.util.RedisssionCluster;
+import com.haodong.util.RedissionCluster;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -24,7 +25,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
     private ApplicationContext applicationContext;
 
     @Autowired
-    RedisssionCluster redisssionCluster;
+    RedissionCluster redissionCluster;
     @Autowired
     Gson gson;
 
@@ -45,11 +46,15 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
         }
 
         Thread thread = new Thread(new Runnable() {
+            @SneakyThrows
             @Override
             public void run() {
                 while(true) {
                     String key = RedisKeyUtil.getEventQueueKey();
-                    List<String> events = redisssionCluster.brpop(0, key);
+                    List<String> events = redissionCluster.brpop(0, key);
+                    if(events.size() <= 0){
+                        Thread.sleep(5000000);//休息5秒
+                    }
 
                     for (String message : events) {
                         if (message.equals(key)) {
