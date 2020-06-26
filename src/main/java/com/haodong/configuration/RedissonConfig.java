@@ -24,8 +24,8 @@ import java.util.Map;
 
 @Configuration
 public class RedissonConfig {
-    @Autowired
-    private RedisConfigProperties redisConfigProperties;
+//    @Autowired
+//    private RedisConfigProperties redisConfigProperties;
 
 
     @Autowired

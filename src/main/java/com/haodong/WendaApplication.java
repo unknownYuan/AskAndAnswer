@@ -36,7 +36,7 @@ public class WendaApplication {
         int i = 1;
         for (String name:
              context.getBeanDefinitionNames()) {
-            System.out.println(i + " " + name +" " +  context.getBean(name).getClass());
+            System.out.println(i + " " + name +" || " +  context.getBean(name).getClass());
 //            if(name.equals("druid")){
 //                System.out.println();
 //            }
