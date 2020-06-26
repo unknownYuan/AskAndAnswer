@@ -1,14 +1,13 @@
 package com.haodong.async.handler;
 
-//import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.haodong.async.EventHandler;
 import com.haodong.async.EventModel;
 import com.haodong.async.EventType;
 import com.haodong.model.*;
 import com.haodong.service.*;
-import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyUtil;
+import com.haodong.util.RedisssionCluster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +25,7 @@ public class FeedHandler implements EventHandler {
     FeedService feedService;
 
     @Autowired
-    JedisAdapter jedisAdapter;
+    RedisssionCluster redisssionCluster;
 
     @Autowired
     QuestionService questionService;
@@ -83,7 +82,7 @@ public class FeedHandler implements EventHandler {
         // 给所有粉丝推事件
         for (int follower : followers) {
             String timelineKey = RedisKeyUtil.getTimelineKey(follower);
-            jedisAdapter.lpush(timelineKey, String.valueOf(feed.getId()));
+            redisssionCluster.lpush(timelineKey, String.valueOf(feed.getId()));
             // 限制最长长度，如果timelineKey的长度过大，就删除后面的新鲜事
         }
     }

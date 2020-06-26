@@ -1,14 +1,15 @@
 package com.haodong.service;
 
-import com.haodong.util.JedisAdapter;
+//import com.haodong.util.JedisAdapter;
 import com.haodong.util.RedisKeyUtil;
+import com.haodong.util.RedisssionCluster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LikeService {
     @Autowired
-    JedisAdapter jedisAdapter;
+    RedisssionCluster jedisAdapter;
 
 
     public long getLikeCount(int entityType, int entityId) {

@@ -7,7 +7,8 @@ import com.haodong.model.Question;
 import com.haodong.model.User;
 import com.haodong.service.FollowService;
 import com.haodong.service.SensitiveService;
-import com.haodong.util.JedisAdapter;
+//import com.haodong.util.redisssionCluster;
+import com.haodong.util.RedisssionCluster;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,12 +39,12 @@ public class InitDatabaseTests {
     FollowService followService;
 
     @Autowired
-    JedisAdapter jedisAdapter;
+    RedisssionCluster redisssionCluster;
 
     @Test
     public void contextLoads() {
         Random random = new Random();
-        jedisAdapter.getJedis().flushDB();
+//        redisssionCluster.getJedis().flushDB();
         for (int i = 0; i < 11; ++i) {
             User user = new User();
             user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000)));
