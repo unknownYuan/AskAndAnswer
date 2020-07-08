@@ -47,7 +47,7 @@ public class RedissonConfig {
         source.put("spring.redis.cluster.timeout", environment.getProperty("spring.redis.cluster.timeout"));
         source.put("spring.redis.cluster.max-redirects", environment.getProperty("spring.redis.cluster.max-redirects"));
         RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(new MapPropertySource("RedisClusterConfiguration", source));
-        
+
         return new LettuceConnectionFactory(redisClusterConfiguration);
     }
 
